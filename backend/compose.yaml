@@ -1,0 +1,25 @@
+services:
+  postgres:
+    image: 'postgres:16'
+    ports:
+      - ${DB_PORT}:5432
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - ./db-data:/var/lib/postgres
+
+  api:
+    build: .
+    ports:
+      - ${SERVER_PORT}:8080
+    environment:
+      APP_PROFILE: ${ENV}
+      DB_URL: jdbc:postgresql://postgres:5432/${DB_NAME}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_ISSUER: ${JWT_ISSUER}
+    depends_on:
+      - postgres

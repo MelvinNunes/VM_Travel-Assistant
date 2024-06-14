@@ -1,12 +1,14 @@
 package com.vm.travel.infrastructure.security;
 
-import com.vm.travel.domain.services.UserService;
+import com.vm.travel.domain.repositories.UserRepo;
 import com.vm.travel.infrastructure.exceptions.NotFoundException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,8 +22,9 @@ import java.io.IOException;
 @Component
 @RequiredArgsConstructor
 public class SecurityFilter extends OncePerRequestFilter {
+    private final MessageSource messageSource;
     private final TokenService tokenService;
-    private final UserService userService;
+    private final UserRepo userRepo;
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,@NonNull HttpServletResponse response,@NonNull FilterChain filterChain) throws ServletException, IOException {
@@ -30,7 +33,7 @@ public class SecurityFilter extends OncePerRequestFilter {
             var login = tokenService.validateToken(token);
             UserDetails user;
             try {
-                user = userService.findByLogin(login);
+                user = userRepo.findByLogin(login).orElseThrow(() -> new NotFoundException(messageSource.getMessage("users.not_found", null, LocaleContextHolder.getLocale())));
             } catch (NotFoundException e) {
                 throw new RuntimeException(e);
             }

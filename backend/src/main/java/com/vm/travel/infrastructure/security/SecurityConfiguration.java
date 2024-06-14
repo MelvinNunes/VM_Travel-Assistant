@@ -27,17 +27,17 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                                .requestMatchers(HttpMethod.GET, "/swagger-ui/**",
+                                .requestMatchers(HttpMethod.GET,
+                                        "/swagger-ui/**",
                                         "/swagger-resources/**",
                                         "/v2/api-docs/**",
                                         "/v3/api-docs/**",
                                         "/webjars/**",
                                         "/docs.html",
                                         "/docs.html/**",
-                                        "/api/v1/health",
-                                        "/api/v1/health/**"
+                                        "/api/v1/health"
                                 ).permitAll()
-                                .requestMatchers(HttpMethod.POST, "/api/v1/auth/username").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/api/v1/auth/login").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/v1/auth/register").permitAll()
                                 .anyRequest().authenticated()
                 )

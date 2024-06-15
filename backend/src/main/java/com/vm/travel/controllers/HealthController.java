@@ -1,8 +1,6 @@
 package com.vm.travel.controllers;
 
 import com.vm.travel.dto.ResponseAPI;
-import com.vm.travel.integrations.geodb.GeoDbClient;
-import com.vm.travel.integrations.openweather.OpenWeatherClient;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +21,6 @@ import java.util.concurrent.ExecutionException;
 @RequestMapping("/api/v1/health")
 public class HealthController {
     private final MessageSource messageSource;
-
 
     @Operation(summary = "Check API health")
     @GetMapping

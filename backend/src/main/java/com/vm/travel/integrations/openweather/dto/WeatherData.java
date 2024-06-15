@@ -13,7 +13,8 @@ public record WeatherData(
         int timezone,
         int id,
         String name,
-        int cod
+        int cod,
+        String dtTxt
 ) {
     public record Coord(double lon, double lat) {}
     public record Weather(int id, String main, String description, String icon) {}

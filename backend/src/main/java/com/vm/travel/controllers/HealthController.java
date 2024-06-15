@@ -24,6 +24,7 @@ import java.util.concurrent.ExecutionException;
 public class HealthController {
     private final MessageSource messageSource;
 
+
     @Operation(summary = "Check API health")
     @GetMapping
     public ResponseEntity<ResponseAPI> health() {

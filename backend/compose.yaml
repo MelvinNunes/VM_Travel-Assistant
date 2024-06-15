@@ -21,5 +21,6 @@ services:
       DB_PASSWORD: ${DB_PASSWORD}
       JWT_SECRET: ${JWT_SECRET}
       JWT_ISSUER: ${JWT_ISSUER}
+      GEO_DB_URL: ${GEO_DB_URL}
     depends_on:
       - postgres

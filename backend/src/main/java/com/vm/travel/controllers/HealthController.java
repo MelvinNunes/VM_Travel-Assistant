@@ -1,6 +1,7 @@
 package com.vm.travel.controllers;
 
 import com.vm.travel.dto.ResponseAPI;
+import com.vm.travel.integrations.geodb.GeoDbClient;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.concurrent.ExecutionException;
+
 
 @Tag(name = "Health", description = "This collection manages the API health collection")
 @RequiredArgsConstructor
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/health")
 public class HealthController {
     private final MessageSource messageSource;
+    private final GeoDbClient client;
 
     @Operation(summary = "Check API health")
     @GetMapping

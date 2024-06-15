@@ -8,8 +8,8 @@
 		<version>3.1.1</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.example</groupId>
-	<artifactId>auth</artifactId>
+	<groupId>com.vm</groupId>
+	<artifactId>travel</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>travel-app</name>
 	<description>Travel Assistant Web-App</description>

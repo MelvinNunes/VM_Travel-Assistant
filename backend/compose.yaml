@@ -22,5 +22,7 @@ services:
       JWT_SECRET: ${JWT_SECRET}
       JWT_ISSUER: ${JWT_ISSUER}
       GEO_DB_URL: ${GEO_DB_URL}
+      OPEN_WEATHER_URL: ${OPEN_WEATHER_URL}
+      OPEN_WEATHER_KEY: ${OPEN_WEATHER_KEY}
     depends_on:
       - postgres

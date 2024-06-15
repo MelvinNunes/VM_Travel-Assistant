@@ -1,8 +1,12 @@
 package com.vm.travel.integrations.openweather;
 
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 
-@Component
+@Configuration
 public class OpenWeatherConfig {
-    private static final String BASE_URL="";
+    @Value("${openweather.url}")
+    public String baseUrl;
+    @Value("${openweather.key}")
+    public String apiKey;
 }

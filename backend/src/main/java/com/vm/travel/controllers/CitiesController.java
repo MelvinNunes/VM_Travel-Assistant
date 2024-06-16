@@ -6,6 +6,7 @@ import com.vm.travel.dto.filters.CityFilters;
 import com.vm.travel.infrastructure.config.ratelimit.RateLimitProtection;
 import com.vm.travel.infrastructure.exceptions.InternalServerErrorException;
 import com.vm.travel.infrastructure.exceptions.NotFoundException;
+import com.vm.travel.infrastructure.exceptions.UnprocessableEntityException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +33,7 @@ public class CitiesController {
     @RateLimitProtection
     public ResponseEntity<ResponseAPI> getAllCities(
             @ParameterObject CityFilters cityFilters
-    ) throws InternalServerErrorException {
+    ) throws InternalServerErrorException, UnprocessableEntityException {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseAPI(
                 messageSource.getMessage("cities.success", null, LocaleContextHolder.getLocale()),
                 cityService.getAllCities(cityFilters)

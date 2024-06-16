@@ -37,6 +37,8 @@ public class SecurityConfiguration {
                                         "/docs.html/**",
                                         "/api/v1/health",
                                         "/api/v1/cities",
+                                        "/api/v1/countries",
+                                        "/api/v1/countries/{countryName:.+}",
                                         "/api/v1/cities/{cityName:.+}",
                                         "/api/v1/cities/{cityName:.+}/weather/current",
                                         "/api/v1/cities/{cityName:.+}/weather/forecast"

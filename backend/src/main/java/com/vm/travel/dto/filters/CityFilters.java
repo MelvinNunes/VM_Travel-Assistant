@@ -11,4 +11,6 @@ import org.springframework.stereotype.Component;
 public class CityFilters {
     @Parameter(description = "This is the query field for finding cities based on the name")
     private String name;
+    @Parameter(description = "This is the query field for finding cities based on the country code")
+    private String countryCode;
 }

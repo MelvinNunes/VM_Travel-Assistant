@@ -1,12 +1,13 @@
 package com.vm.travel.integrations.restcountries.dto;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public record RestCountriesData(
         Name name,
         Flags flags,
-        Map<String, CurrenciesData> currencies,
+        LinkedHashMap<String, CurrenciesData> currencies,
         String[] capital,
         String region,
         String subregion

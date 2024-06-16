@@ -76,4 +76,31 @@ public class RestCountriesClient {
                     return null;
                 });
     }
+
+    public CompletableFuture<RestCountriesResponse> getAllCountriesByCountryName(String countryName) {
+        String url = String.format("%s/name/%s?fields=name,flags,capital,region,subregion,currencies", config.baseUrl, countryName);
+
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleModule module = new SimpleModule();
+        module.addDeserializer(RestCountriesResponse.class, new RestCountriesDeserializer());
+        mapper.registerModule(module);
+
+        return webClient.get()
+                .uri(url)
+                .retrieve()
+                .bodyToMono(String.class)
+                .map(body -> {
+                    try {
+                        return mapper.readValue(body, RestCountriesResponse.class);
+                    } catch (IOException e) {
+                        throw new RuntimeException("Failed to deserialize countries response in getAllCountriesByCountryName method of RestCountriesClient", e);
+                    }
+                })
+                .toFuture()
+                .exceptionally(ex -> {
+                    logger.error("Error fetching countries in getAllCountriesByCountryName method from RestCountriesClient");
+                    logger.error("Stacktrace: ", ex);
+                    return null;
+                });
+    }
 }

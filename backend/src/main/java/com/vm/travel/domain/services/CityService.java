@@ -5,6 +5,7 @@ import com.vm.travel.dto.response.CityResDTO;
 import com.vm.travel.dto.response.WeatherResDTO;
 import com.vm.travel.infrastructure.exceptions.InternalServerErrorException;
 import com.vm.travel.infrastructure.exceptions.NotFoundException;
+import com.vm.travel.infrastructure.exceptions.UnprocessableEntityException;
 import com.vm.travel.infrastructure.utils.WeatherConversor;
 import com.vm.travel.integrations.geodb.GeoDbClient;
 import com.vm.travel.integrations.geodb.dto.GeoDbRes;
@@ -36,16 +37,21 @@ public class CityService {
      * @return a list of {@link CityResDTO} objects containing the details of the cities.
      * @throws InternalServerErrorException if there is an issue retrieving the city details.
      */
-    @Cacheable(value = "cities", key = "#cityFilters.name == null ? 'default' : #cityFilters.name")
-    public List<CityResDTO> getAllCities(CityFilters cityFilters) throws InternalServerErrorException {
-        CompletableFuture<GeoDbRes> citiesFuture = null;
+    @Cacheable(value = "cities", key = "#cityFilters.name != null ? #cityFilters.name : #cityFilters.countryCode != null ? 'country:' + #cityFilters.countryCode : 'default'")
+    public List<CityResDTO> getAllCities(CityFilters cityFilters) throws InternalServerErrorException, UnprocessableEntityException {
+        CompletableFuture<GeoDbRes> citiesFuture;
         List<CityResDTO> cities;
 
-        if (cityFilters.getName() == null) {
-            citiesFuture = geoDbClient.getFirstCities();
+        if (cityFilters.getName() != null && cityFilters.getCountryCode() != null) {
+            throw new UnprocessableEntityException(messageSource.getMessage("cities.unprocessable", null, LocaleContextHolder.getLocale()));
         }
+
         if (cityFilters.getName() != null) {
             citiesFuture = geoDbClient.getCitiesByQuery(cityFilters.getName());
+        } else if (cityFilters.getCountryCode() != null) {
+            citiesFuture = geoDbClient.getCitiesByCountryCode(cityFilters.getCountryCode());
+        } else {
+            citiesFuture = geoDbClient.getFirstCities();
         }
 
         try {

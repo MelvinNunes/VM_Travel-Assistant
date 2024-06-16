@@ -5,6 +5,7 @@ import com.vm.travel.dto.ResponseAPI;
 import com.vm.travel.dto.request.LoginDTO;
 import com.vm.travel.dto.request.RegisterDTO;
 import com.vm.travel.dto.response.LoginResponseDTO;
+import com.vm.travel.infrastructure.config.ratelimit.RateLimitProtection;
 import com.vm.travel.infrastructure.exceptions.ConflictException;
 import com.vm.travel.infrastructure.exceptions.NotFoundException;
 import com.vm.travel.infrastructure.exceptions.UnauthorizedException;
@@ -33,6 +34,7 @@ public class AuthenticationController {
 
     @Operation(summary = "Login using username and password")
     @PostMapping("/login")
+    @RateLimitProtection
     public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid LoginDTO data) throws UnauthorizedException, NotFoundException {
         String token = authenticationService.login(data);
         return ResponseEntity.status(HttpStatus.OK).body(new LoginResponseDTO(
@@ -43,6 +45,7 @@ public class AuthenticationController {
 
     @Operation(summary = "Register using email and password")
     @PostMapping("/register")
+    @RateLimitProtection
     public ResponseEntity<ResponseAPI> register(@RequestBody @Valid RegisterDTO data) throws ConflictException {
         var created = userService.registerUser(data);
         return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseAPI(

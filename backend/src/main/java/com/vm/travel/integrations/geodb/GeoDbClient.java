@@ -78,4 +78,31 @@ public class GeoDbClient {
                 });
     }
 
+    public CompletableFuture<GeoDbRes> getCitiesByCountryCode(String countryCode) {
+        String url = String.format("%s/geo/countries/%s/places", geoDbConfig.baseUrl, countryCode);
+
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleModule module = new SimpleModule();
+        module.addDeserializer(GeoDbRes.class, new GeoDbDeserializer());
+        mapper.registerModule(module);
+
+        return webClient.get()
+                .uri(url)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .retrieve()
+                .bodyToMono(String.class)
+                .map(body -> {
+                    try {
+                        return mapper.readValue(body, GeoDbRes.class);
+                    } catch (IOException e) {
+                        throw new RuntimeException("Failed to deserialize cities response in getCitiesByCountryCode method of GeoDbClient", e);
+                    }
+                })
+                .toFuture()
+                .exceptionally(ex -> {
+                    logger.error("Error requesting list of cities by query using geodb: {}", ex.getMessage());
+                    return null;
+                });
+    }
+
 }

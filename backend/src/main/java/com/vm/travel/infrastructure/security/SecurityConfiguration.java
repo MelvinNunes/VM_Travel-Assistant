@@ -37,7 +37,9 @@ public class SecurityConfiguration {
                                         "/docs.html/**",
                                         "/api/v1/health",
                                         "/api/v1/cities",
-                                        "/api/v1/cities/{type:.+}"
+                                        "/api/v1/cities/{cityName:.+}",
+                                        "/api/v1/cities/{cityName:.+}/weather/current",
+                                        "/api/v1/cities/{cityName:.+}/weather/forecast"
                                 ).permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/v1/auth/login").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/v1/auth/register").permitAll()

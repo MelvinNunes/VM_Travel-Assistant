@@ -6,6 +6,9 @@ import com.vm.travel.infrastructure.exceptions.InternalServerErrorException;
 import com.vm.travel.infrastructure.exceptions.NotFoundException;
 import com.vm.travel.integrations.geodb.GeoDbClient;
 import com.vm.travel.integrations.geodb.dto.GeoDbRes;
+import com.vm.travel.integrations.openweather.OpenWeatherClient;
+import com.vm.travel.integrations.openweather.dto.WeatherData;
+import com.vm.travel.integrations.openweather.dto.WeatherForecastRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.MessageSource;
@@ -21,10 +24,11 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CityService {
     private final GeoDbClient geoDbClient;
+    private final OpenWeatherClient weatherClient;
     private final MessageSource messageSource;
 
     /**
-     * Retrieves a list of all cities based on the provided filters.
+     * Retrieves a list of all cities based on the provided filters from a cache or external API.
      *
      * @param cityFilters the filters to apply when retrieving the list of cities.
      * @return a list of {@link CityResDTO} objects containing the details of the cities.
@@ -51,7 +55,7 @@ public class CityService {
     }
 
     /**
-     * Retrieves detailed information about a specific city by its name.
+     * Retrieves detailed information about a specific city by its name from a cache or external API.
      *
      * @param cityName the name of the city to retrieve details for.
      * @return a {@link CityResDTO} object containing the details of the first city.
@@ -71,6 +75,40 @@ public class CityService {
             throw new NotFoundException(messageSource.getMessage("cities.not_found", new Object[]{cityName}, LocaleContextHolder.getLocale()));
         }
         return cities.get(0);
+    }
+
+    /**
+     * Retrieves the current weather details of a city by its name from a cache or external API.
+     *
+     * @param cityName the name of the city to retrieve weather details for.
+     * @return a {@link WeatherData} object containing the current weather details of the city.
+     * @throws InternalServerErrorException if there is an issue retrieving the weather details.
+     */
+    @Cacheable(value = "currentCityWeatherDetails", key = "#cityName")
+    public WeatherData getCityCurrentWeatherByCityName(String cityName) throws InternalServerErrorException {
+         CompletableFuture<WeatherData> weatherFuture = weatherClient.getCurrentCityWeatherByCityName(cityName);
+         try {
+             return weatherFuture.get();
+         } catch (Exception e) {
+             throw new InternalServerErrorException(messageSource.getMessage("cities.weather.error", null, LocaleContextHolder.getLocale()));
+         }
+    }
+
+    /**
+     * Retrieves the weather forecast details of a city by its name for the next five days from a cache or external API.
+     *
+     * @param cityName the name of the city to retrieve weather forecast details for.
+     * @return a list of {@link WeatherData} objects containing the weather forecast details for the city.
+     * @throws InternalServerErrorException if there is an issue retrieving the weather forecast details.
+     */
+    @Cacheable(value = "currentCityWeatherForecastDetails", key = "#cityName")
+    public List<WeatherData> getCityWeatherForecastByCityName(String cityName) throws InternalServerErrorException {
+        CompletableFuture<WeatherForecastRes> weatherFuture = weatherClient.getCityWeatherForecastForNextFiveDays(cityName);
+        try {
+            return weatherFuture.get().list();
+        } catch (Exception e) {
+            throw new InternalServerErrorException(messageSource.getMessage("cities.weather.error", null, LocaleContextHolder.getLocale()));
+        }
     }
 
     private List<CityResDTO> getCitiesFromFuture(CompletableFuture<GeoDbRes> completableFuture) throws ExecutionException, InterruptedException {

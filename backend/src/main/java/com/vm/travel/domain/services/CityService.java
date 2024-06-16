@@ -7,6 +7,7 @@ import com.vm.travel.infrastructure.exceptions.NotFoundException;
 import com.vm.travel.integrations.geodb.GeoDbClient;
 import com.vm.travel.integrations.geodb.dto.GeoDbRes;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,7 @@ public class CityService {
      * @return a list of {@link CityResDTO} objects containing the details of the cities.
      * @throws InternalServerErrorException if there is an issue retrieving the city details.
      */
+    @Cacheable(value = "cities", key = "#cityFilters.name == null ? 'default' : #cityFilters.name")
     public List<CityResDTO> getAllCities(CityFilters cityFilters) throws InternalServerErrorException {
         CompletableFuture<GeoDbRes> citiesFuture = null;
         List<CityResDTO> cities;

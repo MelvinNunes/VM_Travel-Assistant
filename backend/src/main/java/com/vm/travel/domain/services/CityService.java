@@ -73,7 +73,6 @@ public class CityService {
         return cities.get(0);
     }
 
-
     private List<CityResDTO> getCitiesFromFuture(CompletableFuture<GeoDbRes> completableFuture) throws ExecutionException, InterruptedException {
         return completableFuture.get().data().stream().map(city -> new CityResDTO(
                   city.id(),

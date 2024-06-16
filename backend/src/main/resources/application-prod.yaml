@@ -1,0 +1,24 @@
+# PROD
+spring:
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+api:
+  security:
+    token:
+      secret: ${JWT_SECRET}
+      issuer: ${JWT_ISSUER}
+geodb:
+  url: ${GEO_DB_URL}
+openweather:
+  url: ${OPEN_WEATHER_URL}
+  key: ${OPEN_WEATHER_KEY}
+exchangerates:
+  url: ${EXCHANGE_RATES_URL}
+  api:
+    key: ${EXCHANGE_RATES_API_KEY}
+wordlbank:
+  url: ${WORLD_BANK_URL}
+restcountries:
+  url: ${REST_COUNTRIES_URL}

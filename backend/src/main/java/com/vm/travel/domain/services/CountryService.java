@@ -28,6 +28,13 @@ public class CountryService {
     private final MessageSource messageSource;
     private final Logger logger = LoggerFactory.getLogger(CountryService.class);
 
+    /**
+     * Retrieves a list of countries based on the provided filters from a cache or external API.
+     *
+     * @param countryFilters the filters to apply when retrieving the list of countries.
+     * @return a list of {@link CountryResDTO} objects containing the details of the countries.
+     * @throws InternalServerErrorException if there is an issue retrieving the country list.
+     */
     @Cacheable(value = "countries", key = "#countryFilters.region == null ? 'default' : #countryFilters.region")
     public List<CountryResDTO> getAllCountries(CountryFilters countryFilters) throws InternalServerErrorException {
         CompletableFuture<RestCountriesResponse> data;
@@ -46,6 +53,14 @@ public class CountryService {
         }
     }
 
+    /**
+     * Retrieves detailed information about a country by its name from a cache or external API.
+     *
+     * @param countryName the name of the country to retrieve details for.
+     * @return a {@link CountryResDTO} object containing the details of the country.
+     * @throws InternalServerErrorException if there is an issue retrieving the country details.
+     * @throws NotFoundException if no country details are found for the specified name.
+     */
     @Cacheable(value = "countryDetails", key = "#countryName")
     public CountryResDTO getCountryDetailsByCountryName(String countryName) throws InternalServerErrorException, NotFoundException {
         CompletableFuture<RestCountriesResponse> data = restCountriesClient.getAllCountriesByCountryName(countryName);

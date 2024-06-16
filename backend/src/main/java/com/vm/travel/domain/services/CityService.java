@@ -13,6 +13,8 @@ import com.vm.travel.integrations.openweather.OpenWeatherClient;
 import com.vm.travel.integrations.openweather.dto.WeatherData;
 import com.vm.travel.integrations.openweather.dto.WeatherForecastRes;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -29,6 +31,7 @@ public class CityService {
     private final GeoDbClient geoDbClient;
     private final OpenWeatherClient weatherClient;
     private final MessageSource messageSource;
+    private final Logger logger = LoggerFactory.getLogger(CityService.class);
 
     /**
      * Retrieves a list of all cities based on the provided filters from a cache or external API.
@@ -57,6 +60,7 @@ public class CityService {
         try {
             cities = this.getCitiesFromFuture(citiesFuture);
         } catch (Exception e) {
+            logger.error("Unknow error in CityService, getAllCities, exception: ", e);
             throw new InternalServerErrorException(messageSource.getMessage("server.internal_error", null, LocaleContextHolder.getLocale()));
         }
         return cities;
@@ -77,6 +81,7 @@ public class CityService {
         try {
             cities = this.getCitiesFromFuture(citiesFuture);
         } catch (Exception e) {
+            logger.error("Unknow error in CityService, getSpecificCityDetailsByCityName, exception: ", e);
             throw new InternalServerErrorException(messageSource.getMessage("server.internal_error", null, LocaleContextHolder.getLocale()));
         }
         if (cities.isEmpty()) {
@@ -99,6 +104,7 @@ public class CityService {
             var weatherData = weatherFuture.get();
             return this.buildWeatherResDTO(weatherData);
         } catch (Exception e) {
+            logger.error("Unknow error in CityService, getCityCurrentWeatherByCityName, exception: ", e);
             throw new InternalServerErrorException(messageSource.getMessage("cities.weather.error", null, LocaleContextHolder.getLocale()));
         }
     }
@@ -117,6 +123,7 @@ public class CityService {
             var weatherForecastList = weatherFuture.get().list();
             return weatherForecastList.stream().map(this::buildWeatherResDTO).collect(Collectors.toList());
         } catch (Exception e) {
+            logger.error("Unknow error in CityService, getCityWeatherForecastByCityName, exception: ", e);
             throw new InternalServerErrorException(messageSource.getMessage("cities.weather.error", null, LocaleContextHolder.getLocale()));
         }
     }

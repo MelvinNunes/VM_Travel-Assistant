@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.concurrent.ExecutionException;
+
 @Tag(name = "Health", description = "This collection manages the API health collection")
 @RequiredArgsConstructor
 @RestController
@@ -21,7 +23,7 @@ public class HealthController {
 
     @Operation(summary = "Check API health")
     @GetMapping
-    public ResponseEntity<ResponseAPI> health() {
+    public ResponseEntity<ResponseAPI> health()  {
         String healthMessage = messageSource.getMessage("health", null, LocaleContextHolder.getLocale());
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseAPI(
                 healthMessage,

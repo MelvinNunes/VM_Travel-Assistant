@@ -1,6 +1,7 @@
 package com.vm.travel.integrations.exchangerates;
 
 import com.vm.travel.integrations.exchangerates.dto.ExchangeRateRes;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -9,16 +10,11 @@ import org.springframework.web.reactive.function.client.WebClient;
 import java.util.concurrent.CompletableFuture;
 
 @Component
+@RequiredArgsConstructor
 public class ExchangeRatesClient {
     private final Logger logger = LoggerFactory.getLogger(ExchangeRatesClient.class);
     private final WebClient webClient;
     private final ExchangeRatesConfig config;
-
-
-    public ExchangeRatesClient(WebClient.Builder webClientBuilder, ExchangeRatesConfig config) {
-        this.config = config;
-        this.webClient = webClientBuilder.build();
-    }
 
     public CompletableFuture<ExchangeRateRes> getExchangeRateForCurrency(String currency) {
         return webClient.get()

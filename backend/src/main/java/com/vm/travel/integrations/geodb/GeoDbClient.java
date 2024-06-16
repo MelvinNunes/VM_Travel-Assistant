@@ -1,6 +1,7 @@
 package com.vm.travel.integrations.geodb;
 
 import com.vm.travel.integrations.geodb.dto.GeoDbRes;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -11,15 +12,11 @@ import org.springframework.web.reactive.function.client.WebClient;
 import java.util.concurrent.CompletableFuture;
 
 @Component
+@RequiredArgsConstructor
 public class GeoDbClient {
     private final WebClient webClient;
     private final GeoDbConfig geoDbConfig;
     private final Logger logger = LoggerFactory.getLogger(GeoDbClient.class);
-
-    public GeoDbClient(WebClient.Builder webClientBuilder, GeoDbConfig geoDbConfig) {
-        this.webClient = webClientBuilder.build();
-        this.geoDbConfig = geoDbConfig;
-    }
 
     public CompletableFuture<GeoDbRes> getCitiesByQuery(String query) {
         return webClient.get()

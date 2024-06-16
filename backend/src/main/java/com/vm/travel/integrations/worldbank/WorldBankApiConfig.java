@@ -6,5 +6,5 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class WorldBankApiConfig {
     @Value(("${wordlbank.url}"))
-    private String baseUrl;
+    public String baseUrl;
 }

@@ -2,6 +2,7 @@ package com.vm.travel.integrations.openweather;
 
 import com.vm.travel.integrations.openweather.dto.WeatherData;
 import com.vm.travel.integrations.openweather.dto.WeatherForecastRes;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -12,15 +13,11 @@ import org.springframework.web.reactive.function.client.WebClient;
 import java.util.concurrent.CompletableFuture;
 
 @Component
+@RequiredArgsConstructor
 public class OpenWeatherClient {
     private final WebClient webClient;
     private final OpenWeatherConfig openWeatherConfig;
     private final Logger logger = LoggerFactory.getLogger(OpenWeatherClient.class);
-
-    public OpenWeatherClient(WebClient.Builder webClientBuilder, OpenWeatherConfig openWeatherConfig) {
-        this.webClient = webClientBuilder.build();
-        this.openWeatherConfig = openWeatherConfig;
-    }
 
     public CompletableFuture<WeatherData> getCurrentCityWeatherByCityName(String cityName) {
         return webClient.get()

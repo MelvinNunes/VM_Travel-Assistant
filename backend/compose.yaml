@@ -14,19 +14,7 @@ services:
     build: .
     ports:
       - ${SERVER_PORT}:8080
-    environment:
-      APP_PROFILE: ${ENV}
-      DB_URL: jdbc:postgresql://postgres:5432/${DB_NAME}
-      DB_USERNAME: ${DB_USERNAME}
-      DB_PASSWORD: ${DB_PASSWORD}
-      JWT_SECRET: ${JWT_SECRET}
-      JWT_ISSUER: ${JWT_ISSUER}
-      GEO_DB_URL: ${GEO_DB_URL}
-      OPEN_WEATHER_URL: ${OPEN_WEATHER_URL}
-      OPEN_WEATHER_KEY: ${OPEN_WEATHER_KEY}
-      EXCHANGE_RATES_URL: ${EXCHANGE_RATES_URL}
-      EXCHANGE_RATES_API_KEY: ${EXCHANGE_RATES_API_KEY}
-      WORLD_BANK_URL: ${WORLD_BANK_URL}
-      REST_COUNTRIES_URL: ${REST_COUNTRIES_URL}
+    env_file:
+      - .env
     depends_on:
       - postgres

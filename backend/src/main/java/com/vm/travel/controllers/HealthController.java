@@ -1,6 +1,7 @@
 package com.vm.travel.controllers;
 
 import com.vm.travel.dto.ResponseAPI;
+import com.vm.travel.infrastructure.config.ratelimit.RateLimitProtection;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ public class HealthController {
 
     @Operation(summary = "Check API health")
     @GetMapping
+    @RateLimitProtection
     public ResponseEntity<ResponseAPI> health()  {
         String healthMessage = messageSource.getMessage("health", null, LocaleContextHolder.getLocale());
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseAPI(

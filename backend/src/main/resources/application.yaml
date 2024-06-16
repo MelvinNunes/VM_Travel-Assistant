@@ -14,3 +14,8 @@ spring:
     use-code-as-default-message: false
   jackson:
     property-naming-strategy: SNAKE_CASE
+
+app:
+  rate:
+    limit: ${RATE_LIMIT_REQUESTS_PER_MS}
+    durationinms: ${RATE_LIMIT_MS_DURATION}

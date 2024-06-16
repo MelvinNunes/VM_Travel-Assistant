@@ -35,7 +35,9 @@ public class SecurityConfiguration {
                                         "/webjars/**",
                                         "/docs.html",
                                         "/docs.html/**",
-                                        "/api/v1/health"
+                                        "/api/v1/health",
+                                        "/api/v1/cities",
+                                        "/api/v1/cities/{type:.+}"
                                 ).permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/v1/auth/login").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/v1/auth/register").permitAll()

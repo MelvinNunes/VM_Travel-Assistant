@@ -1,6 +1,6 @@
 package com.vm.travel.controllers;
 
-import com.vm.travel.domain.services.internal.auth.AuthenticationService;
+import com.vm.travel.domain.services.AuthenticationService;
 import com.vm.travel.dto.ResponseAPI;
 import com.vm.travel.dto.request.LoginDTO;
 import com.vm.travel.dto.request.RegisterDTO;

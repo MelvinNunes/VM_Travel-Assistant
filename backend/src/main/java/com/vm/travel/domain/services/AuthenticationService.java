@@ -1,4 +1,4 @@
-package com.vm.travel.domain.services.internal.auth;
+package com.vm.travel.domain.services;
 
 import com.vm.travel.domain.entities.User;
 import com.vm.travel.domain.services.UserService;

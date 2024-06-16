@@ -2,11 +2,14 @@ package com.vm.travel.domain.services;
 
 import com.vm.travel.dto.filters.CityFilters;
 import com.vm.travel.dto.response.CityResDTO;
+import com.vm.travel.dto.response.CountryResDTO;
 import com.vm.travel.dto.response.WeatherResDTO;
 import com.vm.travel.infrastructure.exceptions.InternalServerErrorException;
 import com.vm.travel.infrastructure.exceptions.NotFoundException;
 import com.vm.travel.infrastructure.exceptions.UnprocessableEntityException;
 import com.vm.travel.infrastructure.utils.WeatherConversor;
+import com.vm.travel.integrations.exchangerates.ExchangeRatesClient;
+import com.vm.travel.integrations.exchangerates.dto.ExchangeRateRes;
 import com.vm.travel.integrations.geodb.GeoDbClient;
 import com.vm.travel.integrations.geodb.dto.GeoDbRes;
 import com.vm.travel.integrations.openweather.OpenWeatherClient;
@@ -21,6 +24,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
@@ -30,6 +34,8 @@ import java.util.stream.Collectors;
 public class CityService {
     private final GeoDbClient geoDbClient;
     private final OpenWeatherClient weatherClient;
+    private final ExchangeRatesClient exchangeRatesClient;
+    private final CountryService countryService;
     private final MessageSource messageSource;
     private final Logger logger = LoggerFactory.getLogger(CityService.class);
 
@@ -125,6 +131,48 @@ public class CityService {
         } catch (Exception e) {
             logger.error("Unknow error in CityService, getCityWeatherForecastByCityName, exception: ", e);
             throw new InternalServerErrorException(messageSource.getMessage("cities.weather.error", null, LocaleContextHolder.getLocale()));
+        }
+    }
+
+    /**
+     * Retrieves exchange rate details for a city by its name from a cache or external API.
+     * If currency is not found, ill try to fetch the free one [EUR]
+     *
+     * @param cityName the name of the city to retrieve exchange rates for.
+     * @return an {@link ExchangeRateRes} object containing the exchange rate details.
+     * @throws InternalServerErrorException if there is an issue retrieving the exchange rate details.
+     * @throws NotFoundException if no exchange rate details are found for the specified city.
+     */
+    @Cacheable(value = "cityExchangeRatesByCityName", key = "#cityName")
+    public ExchangeRateRes getCityExchangeRatesByCityName(String cityName) throws InternalServerErrorException, NotFoundException {
+        String defaultCurrency = "EUR"; // free version only accepts EUR😅
+        CityResDTO city = getSpecificCityDetailsByCityName(cityName);
+        CountryResDTO country = countryService.getCountryDetailsByCountryName(city.country()); // had to get the country to get the currency
+        try {
+            return fetchExchangeRateForCurrency(country.currency()).orElseGet(() -> {
+                try {
+                    return fetchExchangeRateForCurrency(defaultCurrency)
+                            .orElseThrow(() -> new InternalServerErrorException(messageSource.getMessage("server.internal_error", null, LocaleContextHolder.getLocale())));
+                } catch (InternalServerErrorException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        } catch (Exception e) {
+            logger.error("Error fetching exchange rate for city: {}", cityName, e);
+            throw new InternalServerErrorException(messageSource.getMessage("server.internal_error", null, LocaleContextHolder.getLocale()));
+        }
+    }
+
+    private Optional<ExchangeRateRes> fetchExchangeRateForCurrency(String currency) {
+        try {
+            var data = exchangeRatesClient.getExchangeRateForCurrency(currency).get();
+            if (!data.success()) {
+                throw new UnprocessableEntityException(messageSource.getMessage("cities.exchanges.error", null, LocaleContextHolder.getLocale()));
+            }
+            return Optional.of(data);
+        } catch (Exception e) {
+            logger.error("Error fetching exchange rate for default currency: {}", currency, e);
+            return Optional.empty();
         }
     }
 

@@ -22,6 +22,9 @@ public class TokenService {
     private String secret;
     @Value("${api.security.token.issuer}")
     private String jwtIssuer;
+    @Value("${api.security.token.duration_in_hours}")
+    private Integer duration;
+
     private final MessageSource messageSource;
 
     public String generateToken(User user){
@@ -51,6 +54,6 @@ public class TokenService {
     }
 
     private Instant genExpirationDate(){
-        return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
+        return LocalDateTime.now().plusHours(duration).toInstant(ZoneOffset.of("-03:00"));
     }
 }

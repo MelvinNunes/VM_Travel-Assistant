@@ -9,6 +9,7 @@ api:
     token:
       secret: ${JWT_SECRET}
       issuer: ${JWT_ISSUER}
+      duration_in_hours: ${JWT_DURATION_IN_HOURS}
 geodb:
   url: ${GEO_DB_URL}
 openweather:

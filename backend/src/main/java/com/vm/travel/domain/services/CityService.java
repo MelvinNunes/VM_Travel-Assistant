@@ -58,6 +58,7 @@ public class CityService {
      * @throws InternalServerErrorException if there is an issue retrieving the city details.
      * @throws NotFoundException if no city details are found for the specified name.
      */
+    @Cacheable(value = "cityDetails", key = "#cityName")
     public CityResDTO getSpecificCityDetailsByCityName(String cityName) throws InternalServerErrorException, NotFoundException {
         CompletableFuture<GeoDbRes> citiesFuture = geoDbClient.getCitiesByQuery(cityName);
         List<CityResDTO> cities;

@@ -41,6 +41,7 @@ public class CitiesController {
 
     @GetMapping("/{cityName}")
     @Operation(summary = "Get specific city details using the city name")
+    @RateLimitProtection
     public ResponseEntity<ResponseAPI> getCityDetails(
             @PathVariable(name = "cityName") String cityName
     ) throws InternalServerErrorException, NotFoundException {

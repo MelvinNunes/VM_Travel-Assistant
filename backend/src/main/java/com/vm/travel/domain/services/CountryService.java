@@ -1,10 +1,14 @@
 package com.vm.travel.domain.services;
 
 import com.vm.travel.dto.filters.CountryFilters;
+import com.vm.travel.dto.response.CityResDTO;
 import com.vm.travel.dto.response.CountryResDTO;
 import com.vm.travel.infrastructure.exceptions.InternalServerErrorException;
 import com.vm.travel.infrastructure.exceptions.NotFoundException;
+import com.vm.travel.infrastructure.exceptions.UnprocessableEntityException;
 import com.vm.travel.infrastructure.utils.HashMapUtils;
+import com.vm.travel.integrations.exchangerates.ExchangeRatesClient;
+import com.vm.travel.integrations.exchangerates.dto.ExchangeRateRes;
 import com.vm.travel.integrations.restcountries.RestCountriesClient;
 import com.vm.travel.integrations.restcountries.dto.RestCountriesData;
 import com.vm.travel.integrations.restcountries.dto.RestCountriesResponse;
@@ -23,6 +27,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
@@ -31,6 +36,8 @@ import java.util.stream.Collectors;
 public class CountryService {
     private final RestCountriesClient restCountriesClient;
     private final WorldBankApiClient worldBankApiClient;
+    private final ExchangeRatesClient exchangeRatesClient;
+    private final CityService cityService;
     private final MessageSource messageSource;
     private final Logger logger = LoggerFactory.getLogger(CountryService.class);
 
@@ -50,7 +57,6 @@ public class CountryService {
         } else {
             data = restCountriesClient.getAllCountries();
         }
-
         try {
             return data.get().restCountriesData().stream().map(this::buildCountryVM).collect(Collectors.toList());
         } catch (Exception e) {
@@ -82,6 +88,46 @@ public class CountryService {
         }
         var country = countries.get(0);
         return this.buildCountryVM(country);
+    }
+
+    /**
+     * Retrieves exchange rate details for a country by its name from a cache or external API.
+     *
+     * @param countryName the name of the country to retrieve exchange rates for.
+     * @return an {@link ExchangeRateRes} object containing the exchange rate details.
+     * @throws InternalServerErrorException if there is an issue retrieving the exchange rate details.
+     * @throws NotFoundException if no exchange rate details are found for the specified country.
+     */
+    @Cacheable(value = "countryExchangeRatesByCountryName", key = "#countryName")
+    public ExchangeRateRes getCountryExchangeRatesByCountryName(String countryName) throws InternalServerErrorException, NotFoundException {
+        String defaultCurrency = "EUR"; // free version only accepts EUR😅
+        CountryResDTO country = getCountryDetailsByCountryName(countryName); // had to get the country to get the currency
+        try {
+            return fetchExchangeRateForCurrency(country.currency()).orElseGet(() -> {
+                try {
+                    return fetchExchangeRateForCurrency(defaultCurrency)
+                            .orElseThrow(() -> new InternalServerErrorException(messageSource.getMessage("server.internal_error", null, LocaleContextHolder.getLocale())));
+                } catch (InternalServerErrorException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        } catch (Exception e) {
+            logger.error("Error fetching exchange rate for country: {}", countryName, e);
+            throw new InternalServerErrorException(messageSource.getMessage("server.internal_error", null, LocaleContextHolder.getLocale()));
+        }
+    }
+
+    private Optional<ExchangeRateRes> fetchExchangeRateForCurrency(String currency) {
+        try {
+            var data = exchangeRatesClient.getExchangeRateForCurrency(currency).get();
+            if (!data.success()) {
+                throw new UnprocessableEntityException(messageSource.getMessage("countries.exchanges.error", null, LocaleContextHolder.getLocale()));
+            }
+            return Optional.of(data);
+        } catch (Exception e) {
+            logger.error("Error fetching exchange rate for default currency: {}", currency, e);
+            return Optional.empty();
+        }
     }
 
     /**

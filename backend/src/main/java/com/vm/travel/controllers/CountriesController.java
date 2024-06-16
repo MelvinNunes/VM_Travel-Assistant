@@ -63,6 +63,18 @@ public class CountriesController {
         ));
     }
 
+    @GetMapping("/{countryName}/exchange-rates")
+    @Operation(summary = "Get specific country exchange rates using the country name")
+    @RateLimitProtection
+    public ResponseEntity<ResponseAPI> getCityExchangeRates(
+            @PathVariable(name = "countryName") String countryName
+    ) throws InternalServerErrorException, NotFoundException {
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseAPI(
+                messageSource.getMessage("countries.exchanges.success", null, LocaleContextHolder.getLocale()),
+                countryService.getCountryExchangeRatesByCountryName(countryName)
+        ));
+    }
+
     @GetMapping("/{countryName}")
     @Operation(summary = "Get country details based on country's name")
     @RateLimitProtection

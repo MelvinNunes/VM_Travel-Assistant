@@ -15,7 +15,7 @@ public class CacheConfig {
         return new ConcurrentMapCacheManager(
                 "cities", "cityDetails", "currentCityWeatherDetails",
                 "currentCityWeatherForecastDetails", "countryPopulationDataByCountryCode", "countryGdpDataByCountryCode",
-                "countries", "countryDetails", "cityExchangeRatesByCityName"
+                "countries", "countryDetails", "countryExchangeRatesByCountryName"
         );
     }
 

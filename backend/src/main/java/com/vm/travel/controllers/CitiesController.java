@@ -63,18 +63,6 @@ public class CitiesController {
         ));
     }
 
-    @GetMapping("/{cityName}/exchange-rates")
-    @Operation(summary = "Get specific city exchange rates using the city name")
-    @RateLimitProtection
-    public ResponseEntity<ResponseAPI> getCityExchangeRates(
-            @PathVariable(name = "cityName") String cityName
-    ) throws InternalServerErrorException, NotFoundException {
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseAPI(
-                messageSource.getMessage("cities.exchanges.success", null, LocaleContextHolder.getLocale()),
-                cityService.getCityExchangeRatesByCityName(cityName)
-        ));
-    }
-
     @GetMapping("/{cityName}")
     @Operation(summary = "Get specific city details using the city name")
     @RateLimitProtection

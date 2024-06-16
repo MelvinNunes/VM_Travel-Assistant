@@ -20,8 +20,10 @@ public class OpenWeatherClient {
     private final Logger logger = LoggerFactory.getLogger(OpenWeatherClient.class);
 
     public CompletableFuture<WeatherData> getCurrentCityWeatherByCityName(String cityName) {
+        String url = String.format("%s/weather?q=%s&appid=%s", openWeatherConfig.baseUrl, cityName, openWeatherConfig.apiKey);
+
         return webClient.get()
-                .uri(openWeatherConfig.baseUrl + "/weather?q=" + cityName + "&appid=" + openWeatherConfig.apiKey)
+                .uri(url)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .retrieve()
                 .bodyToMono(WeatherData.class)
@@ -33,8 +35,10 @@ public class OpenWeatherClient {
     }
 
     public CompletableFuture<WeatherForecastRes> getCityWeatherForecastForNextFiveDays(String cityName) {
-        return webClient.get() // comes ordered by date forecast
-                .uri(openWeatherConfig.baseUrl + "/forecast?q=" + cityName + "&appid=" + openWeatherConfig.apiKey)
+        String url = String.format("%s/forecast?q=%s&appid=%s", openWeatherConfig.baseUrl, cityName, openWeatherConfig.apiKey);
+
+        return webClient.get()
+                .uri(url)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .retrieve()
                 .bodyToMono(WeatherForecastRes.class)

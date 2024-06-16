@@ -19,8 +19,10 @@ public class GeoDbClient {
     private final Logger logger = LoggerFactory.getLogger(GeoDbClient.class);
 
     public CompletableFuture<GeoDbRes> getCitiesByQuery(String query) {
+        String url = String.format("%s/geo/cities?namePrefix=%s", geoDbConfig.baseUrl, query);
+
         return webClient.get()
-                .uri(geoDbConfig.baseUrl + "/geo/cities?namePrefix=" + query)
+                .uri(url)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .retrieve()
                 .bodyToMono(GeoDbRes.class)

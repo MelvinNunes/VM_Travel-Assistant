@@ -17,8 +17,10 @@ public class ExchangeRatesClient {
     private final ExchangeRatesConfig config;
 
     public CompletableFuture<ExchangeRateRes> getExchangeRateForCurrency(String currency) {
+        String url = String.format("%s/latest?base=%s&access_key=%s", config.baseUrl, currency, config.apiKey);
+
         return webClient.get()
-                .uri(config.baseUrl + "/latest?base=" + currency + "&access_key=" + config.apiKey)
+                .uri(url)
                 .retrieve()
                 .bodyToMono(ExchangeRateRes.class)
                 .toFuture()

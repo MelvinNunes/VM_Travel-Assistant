@@ -16,6 +16,8 @@ public class ExchangeRatesClient {
     private final WebClient webClient;
     private final ExchangeRatesConfig config;
 
+
+    /* Free Version only accepts EUR as base */
     public CompletableFuture<ExchangeRateRes> getExchangeRateForCurrency(String currency) {
         String url = String.format("%s/latest?base=%s&access_key=%s", config.baseUrl, currency, config.apiKey);
 

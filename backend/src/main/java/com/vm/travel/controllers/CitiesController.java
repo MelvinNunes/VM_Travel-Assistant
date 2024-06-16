@@ -43,9 +43,10 @@ public class CitiesController {
     @Operation(summary = "Gets the current weather in specific city")
     @RateLimitProtection
     public ResponseEntity<ResponseAPI> getCityCurrentWeather(@PathVariable(name = "cityName") String cityName) throws InternalServerErrorException {
+        String currentLang = LocaleContextHolder.getLocale().getLanguage();
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseAPI(
-                messageSource.getMessage("cities.weather.current", new Object[]{cityName}, LocaleContextHolder.getLocale()),
-                cityService.getCityCurrentWeatherByCityName(cityName)
+                messageSource.getMessage("cities.weather.current", null, LocaleContextHolder.getLocale()),
+                cityService.getCityCurrentWeatherByCityName(cityName, currentLang)
         ));
     }
 
@@ -54,9 +55,10 @@ public class CitiesController {
     @Operation(summary = "Gets the weather forecast in specific city")
     @RateLimitProtection
     public ResponseEntity<ResponseAPI> getCityWeatherForecast(@PathVariable(name = "cityName") String cityName) throws InternalServerErrorException {
+        String currentLang = LocaleContextHolder.getLocale().getLanguage();
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseAPI(
-                messageSource.getMessage("cities.weather.forecast", new Object[]{cityName}, LocaleContextHolder.getLocale()),
-                cityService.getCityWeatherForecastByCityName(cityName)
+                messageSource.getMessage("cities.weather.forecast", null, LocaleContextHolder.getLocale()),
+                cityService.getCityWeatherForecastByCityName(cityName, currentLang)
         ));
     }
 

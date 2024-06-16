@@ -5,6 +5,7 @@ import com.vm.travel.integrations.openweather.dto.WeatherForecastRes;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -19,8 +20,8 @@ public class OpenWeatherClient {
     private final OpenWeatherConfig openWeatherConfig;
     private final Logger logger = LoggerFactory.getLogger(OpenWeatherClient.class);
 
-    public CompletableFuture<WeatherData> getCurrentCityWeatherByCityName(String cityName) {
-        String url = String.format("%s/weather?q=%s&appid=%s", openWeatherConfig.baseUrl, cityName, openWeatherConfig.apiKey);
+    public CompletableFuture<WeatherData> getCurrentCityWeatherByCityName(String cityName, String lang) {
+        String url = String.format("%s/weather?q=%s&appid=%s&lang=%s", openWeatherConfig.baseUrl, cityName, openWeatherConfig.apiKey, lang);
 
         return webClient.get()
                 .uri(url)
@@ -34,8 +35,8 @@ public class OpenWeatherClient {
                 });
     }
 
-    public CompletableFuture<WeatherForecastRes> getCityWeatherForecastForNextFiveDays(String cityName) {
-        String url = String.format("%s/forecast?q=%s&appid=%s", openWeatherConfig.baseUrl, cityName, openWeatherConfig.apiKey);
+    public CompletableFuture<WeatherForecastRes> getCityWeatherForecastForNextFiveDays(String cityName, String lang) {
+        String url = String.format("%s/forecast?q=%s&appid=%s&lang=%s", openWeatherConfig.baseUrl, cityName, openWeatherConfig.apiKey, lang);
 
         return webClient.get()
                 .uri(url)

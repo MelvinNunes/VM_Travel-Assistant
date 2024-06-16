@@ -2,8 +2,10 @@ package com.vm.travel.domain.services;
 
 import com.vm.travel.dto.filters.CityFilters;
 import com.vm.travel.dto.response.CityResDTO;
+import com.vm.travel.dto.response.WeatherResDTO;
 import com.vm.travel.infrastructure.exceptions.InternalServerErrorException;
 import com.vm.travel.infrastructure.exceptions.NotFoundException;
+import com.vm.travel.infrastructure.utils.WeatherConversor;
 import com.vm.travel.integrations.geodb.GeoDbClient;
 import com.vm.travel.integrations.geodb.dto.GeoDbRes;
 import com.vm.travel.integrations.openweather.OpenWeatherClient;
@@ -47,7 +49,7 @@ public class CityService {
         }
 
         try {
-           cities = this.getCitiesFromFuture(citiesFuture);
+            cities = this.getCitiesFromFuture(citiesFuture);
         } catch (Exception e) {
             throw new InternalServerErrorException(messageSource.getMessage("server.internal_error", null, LocaleContextHolder.getLocale()));
         }
@@ -60,7 +62,7 @@ public class CityService {
      * @param cityName the name of the city to retrieve details for.
      * @return a {@link CityResDTO} object containing the details of the first city.
      * @throws InternalServerErrorException if there is an issue retrieving the city details.
-     * @throws NotFoundException if no city details are found for the specified name.
+     * @throws NotFoundException            if no city details are found for the specified name.
      */
     @Cacheable(value = "cityDetails", key = "#cityName")
     public CityResDTO getSpecificCityDetailsByCityName(String cityName) throws InternalServerErrorException, NotFoundException {
@@ -84,14 +86,15 @@ public class CityService {
      * @return a {@link WeatherData} object containing the current weather details of the city.
      * @throws InternalServerErrorException if there is an issue retrieving the weather details.
      */
-    @Cacheable(value = "currentCityWeatherDetails", key = "#cityName")
-    public WeatherData getCityCurrentWeatherByCityName(String cityName) throws InternalServerErrorException {
-         CompletableFuture<WeatherData> weatherFuture = weatherClient.getCurrentCityWeatherByCityName(cityName);
-         try {
-             return weatherFuture.get();
-         } catch (Exception e) {
-             throw new InternalServerErrorException(messageSource.getMessage("cities.weather.error", null, LocaleContextHolder.getLocale()));
-         }
+    @Cacheable(value = "currentCityWeatherDetails", key = "#cityName + '_' + #lang")
+    public WeatherResDTO getCityCurrentWeatherByCityName(String cityName, String lang) throws InternalServerErrorException {
+        CompletableFuture<WeatherData> weatherFuture = weatherClient.getCurrentCityWeatherByCityName(cityName, lang);
+        try {
+            var weatherData = weatherFuture.get();
+            return this.buildWeatherResDTO(weatherData);
+        } catch (Exception e) {
+            throw new InternalServerErrorException(messageSource.getMessage("cities.weather.error", null, LocaleContextHolder.getLocale()));
+        }
     }
 
     /**
@@ -101,11 +104,12 @@ public class CityService {
      * @return a list of {@link WeatherData} objects containing the weather forecast details for the city.
      * @throws InternalServerErrorException if there is an issue retrieving the weather forecast details.
      */
-    @Cacheable(value = "currentCityWeatherForecastDetails", key = "#cityName")
-    public List<WeatherData> getCityWeatherForecastByCityName(String cityName) throws InternalServerErrorException {
-        CompletableFuture<WeatherForecastRes> weatherFuture = weatherClient.getCityWeatherForecastForNextFiveDays(cityName);
+    @Cacheable(value = "currentCityWeatherForecastDetails", key = "#cityName + '_' + #lang")
+    public List<WeatherResDTO> getCityWeatherForecastByCityName(String cityName, String lang) throws InternalServerErrorException {
+        CompletableFuture<WeatherForecastRes> weatherFuture = weatherClient.getCityWeatherForecastForNextFiveDays(cityName, lang);
         try {
-            return weatherFuture.get().list();
+            var weatherForecastList = weatherFuture.get().list();
+            return weatherForecastList.stream().map(this::buildWeatherResDTO).collect(Collectors.toList());
         } catch (Exception e) {
             throw new InternalServerErrorException(messageSource.getMessage("cities.weather.error", null, LocaleContextHolder.getLocale()));
         }
@@ -113,19 +117,33 @@ public class CityService {
 
     private List<CityResDTO> getCitiesFromFuture(CompletableFuture<GeoDbRes> completableFuture) throws ExecutionException, InterruptedException {
         return completableFuture.get().data().stream().map(city -> new CityResDTO(
-                  city.id(),
-                  city.type(),
-                  city.city(),
-                  city.name(),
-                  city.country(),
-                  city.countryCode(),
-                  city.region(),
-                  city.regionCode(),
-                  city.latitude(),
-                  city.longitude(),
-                  city.population(),
-                  city.placeType()
-          )).collect(Collectors.toList());
+                city.id(),
+                city.type(),
+                city.city(),
+                city.name(),
+                city.country(),
+                city.countryCode(),
+                city.region(),
+                city.regionCode(),
+                city.latitude(),
+                city.longitude(),
+                city.population(),
+                city.placeType()
+        )).collect(Collectors.toList());
+    }
+
+    private WeatherResDTO buildWeatherResDTO(WeatherData weatherData) {
+        return new WeatherResDTO(
+                weatherData.weather(),
+                WeatherConversor.convertFromKelvinToCelsius(weatherData.main().temp()),
+                WeatherConversor.convertFromKelvinToCelsius(weatherData.main().temp_min()),
+                WeatherConversor.convertFromKelvinToCelsius(weatherData.main().temp_max()),
+                WeatherConversor.convertFromKelvinToCelsius(weatherData.main().feels_like()),
+                weatherData.main().pressure(),
+                weatherData.main().humidity(),
+                weatherData.wind().speed(),
+                weatherData.dtTxt()
+        );
     }
 
 }

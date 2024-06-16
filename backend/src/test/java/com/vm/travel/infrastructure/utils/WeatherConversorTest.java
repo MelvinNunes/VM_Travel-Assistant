@@ -35,4 +35,28 @@ class WeatherConversorTest {
     }
 
 
+    @Test
+    @DisplayName("Success case - Check if 26.7 celsius is rounded to 27")
+    void test_round_temp_success() {
+        double celsiusTemp = 26.7;
+        double expectedRoundedTemp = 27;
+        assertEquals(expectedRoundedTemp, WeatherConversor.removeDecimalPlacesFromTemperature(celsiusTemp));
+    }
+
+    @Test
+    @DisplayName("Success case - Check if 26.4 celsius is rounded to 26")
+    void test_round_temp_success_2() {
+        double celsiusTemp = 26.4;
+        double expectedRoundedTemp = 26;
+        assertEquals(expectedRoundedTemp, WeatherConversor.removeDecimalPlacesFromTemperature(celsiusTemp));
+    }
+
+
+    @Test
+    @DisplayName("Success case - Check if 25.5 celsius is rounded to 26")
+    void test_round_temp_success_3() {
+        double celsiusTemp = 25.5;
+        double expectedRoundedTemp = 26;
+        assertEquals(expectedRoundedTemp, WeatherConversor.removeDecimalPlacesFromTemperature(celsiusTemp));
+    }
 }

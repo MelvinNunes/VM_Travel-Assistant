@@ -39,6 +39,30 @@ public class CountriesController {
         ));
     }
 
+    @GetMapping("/{countryCode}/population")
+    @Operation(summary = "Get country population data based on country's code")
+    @RateLimitProtection
+    public ResponseEntity<ResponseAPI> getCountryPopulationData(
+            @PathVariable(name = "countryCode") String countryCode
+    ) throws InternalServerErrorException, NotFoundException {
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseAPI(
+                messageSource.getMessage("countries.pupulation.success", null, LocaleContextHolder.getLocale()),
+                countryService.getCountryPopulationDataByCountryCode(countryCode)
+        ));
+    }
+
+    @GetMapping("/{countryCode}/gdp")
+    @Operation(summary = "Get country gdp data based on country's code")
+    @RateLimitProtection
+    public ResponseEntity<ResponseAPI> getCountryGdpData(
+            @PathVariable(name = "countryCode") String countryCode
+    ) throws InternalServerErrorException, NotFoundException {
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseAPI(
+                messageSource.getMessage("countries.gdp.success", null, LocaleContextHolder.getLocale()),
+                countryService.getCountryGdpDataByCountryCode(countryCode)
+        ));
+    }
+
     @GetMapping("/{countryName}")
     @Operation(summary = "Get country details based on country's name")
     @RateLimitProtection

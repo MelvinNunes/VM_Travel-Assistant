@@ -8,6 +8,11 @@ import com.vm.travel.infrastructure.utils.HashMapUtils;
 import com.vm.travel.integrations.restcountries.RestCountriesClient;
 import com.vm.travel.integrations.restcountries.dto.RestCountriesData;
 import com.vm.travel.integrations.restcountries.dto.RestCountriesResponse;
+import com.vm.travel.integrations.worldbank.WorldBankApiClient;
+import com.vm.travel.integrations.worldbank.dto.GDPData;
+import com.vm.travel.integrations.worldbank.dto.GDPResponse;
+import com.vm.travel.integrations.worldbank.dto.PopulationData;
+import com.vm.travel.integrations.worldbank.dto.PopulationResponse;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +30,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CountryService {
     private final RestCountriesClient restCountriesClient;
+    private final WorldBankApiClient worldBankApiClient;
     private final MessageSource messageSource;
     private final Logger logger = LoggerFactory.getLogger(CountryService.class);
 
@@ -78,6 +84,53 @@ public class CountryService {
         return this.buildCountryVM(country);
     }
 
+    /**
+     * Retrieves population data for a country by its country code from a cache or external API.
+     *
+     * @param countryCode the code of the country to retrieve population data for.
+     * @return a list of {@link PopulationData} objects containing the population data for the country.
+     * @throws InternalServerErrorException if there is an issue retrieving the population data.
+     * @throws NotFoundException if no population data is found for the specified country code.
+     */
+    @Cacheable(value = "countryPopulationDataByCountryCode", key = "#countryCode")
+    public List<PopulationData> getCountryPopulationDataByCountryCode(String countryCode) throws InternalServerErrorException, NotFoundException {
+       var populationCompletableFuture = worldBankApiClient.getCountryPopulationDataByCountryCode(countryCode);
+        PopulationResponse data;
+       try {
+           data = populationCompletableFuture.get();
+       } catch (Exception e) {
+           logger.error("Error in CountryService, getCountryPopulationDataByCountryCode, exception: ", e);
+           throw new InternalServerErrorException(messageSource.getMessage("server.internal_error", null, LocaleContextHolder.getLocale()));
+       }
+        if (data == null) {
+            throw new NotFoundException(messageSource.getMessage("countries.pupulation.not_found", null, LocaleContextHolder.getLocale()));
+        }
+        return data.populationData();
+    }
+
+    /**
+     * Retrieves GDP data for a country by its country code from a cache or external API.
+     *
+     * @param countryCode the code of the country to retrieve GDP data for.
+     * @return a list of {@link GDPData} objects containing the GDP data for the country.
+     * @throws InternalServerErrorException if there is an issue retrieving the GDP data.
+     * @throws NotFoundException if no GDP data is found for the specified country code.
+     */
+    @Cacheable(value = "countryGdpDataByCountryCode", key = "#countryCode")
+    public List<GDPData> getCountryGdpDataByCountryCode(String countryCode) throws InternalServerErrorException, NotFoundException {
+        var populationCompletableFuture = worldBankApiClient.getCountryGdpDataByCountryCode(countryCode);
+        GDPResponse response;
+        try {
+            response = populationCompletableFuture.get();
+        } catch (Exception e) {
+            logger.error("Error in CountryService, getCountryGdpDataByCountryCode, exception: ", e);
+            throw new InternalServerErrorException(messageSource.getMessage("server.internal_error", null, LocaleContextHolder.getLocale()));
+        }
+        if (response == null) {
+            throw new NotFoundException(messageSource.getMessage("countries.gdp.not_found", null, LocaleContextHolder.getLocale()));
+        }
+        return response.gdpData();
+    }
 
     public CountryResDTO buildCountryVM(RestCountriesData country) {
         return new CountryResDTO(

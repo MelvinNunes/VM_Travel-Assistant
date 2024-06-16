@@ -102,15 +102,20 @@ public class CityService {
      * @throws InternalServerErrorException if there is an issue retrieving the weather details.
      */
     @Cacheable(value = "currentCityWeatherDetails", key = "#cityName + '_' + #lang")
-    public WeatherResDTO getCityCurrentWeatherByCityName(String cityName, String lang) throws InternalServerErrorException {
+    public WeatherResDTO getCityCurrentWeatherByCityName(String cityName, String lang) throws InternalServerErrorException, UnprocessableEntityException {
         CompletableFuture<WeatherData> weatherFuture = weatherClient.getCurrentCityWeatherByCityName(cityName, lang);
+        WeatherData data;
+
         try {
-            var weatherData = weatherFuture.get();
-            return this.buildWeatherResDTO(weatherData);
+            data = weatherFuture.get();
         } catch (Exception e) {
             logger.error("Unknow error in CityService, getCityCurrentWeatherByCityName, exception: ", e);
             throw new InternalServerErrorException(messageSource.getMessage("cities.weather.error", null, LocaleContextHolder.getLocale()));
         }
+        if (data == null) {
+            throw new UnprocessableEntityException(messageSource.getMessage("cities.weather.unprocessable", null, LocaleContextHolder.getLocale()));
+        }
+        return this.buildWeatherResDTO(data);
     }
 
     /**
@@ -121,15 +126,19 @@ public class CityService {
      * @throws InternalServerErrorException if there is an issue retrieving the weather forecast details.
      */
     @Cacheable(value = "currentCityWeatherForecastDetails", key = "#cityName + '_' + #lang")
-    public List<WeatherResDTO> getCityWeatherForecastByCityName(String cityName, String lang) throws InternalServerErrorException {
+    public List<WeatherResDTO> getCityWeatherForecastByCityName(String cityName, String lang) throws InternalServerErrorException, UnprocessableEntityException {
         CompletableFuture<WeatherForecastRes> weatherFuture = weatherClient.getCityWeatherForecastForNextFiveDays(cityName, lang);
+        WeatherForecastRes response;
         try {
-            var weatherForecastList = weatherFuture.get().list();
-            return weatherForecastList.stream().map(this::buildWeatherResDTO).collect(Collectors.toList());
+            response = weatherFuture.get();
         } catch (Exception e) {
             logger.error("Unknow error in CityService, getCityWeatherForecastByCityName, exception: ", e);
             throw new InternalServerErrorException(messageSource.getMessage("cities.weather.error", null, LocaleContextHolder.getLocale()));
         }
+        if (response == null) {
+            throw new UnprocessableEntityException(messageSource.getMessage("cities.weather.unprocessable", null, LocaleContextHolder.getLocale()));
+        }
+        return response.list().stream().map(this::buildWeatherResDTO).collect(Collectors.toList());
     }
 
     private List<CityResDTO> getCitiesFromFuture(CompletableFuture<GeoDbRes> completableFuture) throws ExecutionException, InterruptedException {

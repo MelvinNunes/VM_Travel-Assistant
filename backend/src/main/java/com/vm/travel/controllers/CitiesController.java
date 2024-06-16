@@ -43,7 +43,7 @@ public class CitiesController {
     @GetMapping("/{cityName}/weather/current")
     @Operation(summary = "Gets the current weather in specific city")
     @RateLimitProtection
-    public ResponseEntity<ResponseAPI> getCityCurrentWeather(@PathVariable(name = "cityName") String cityName) throws InternalServerErrorException {
+    public ResponseEntity<ResponseAPI> getCityCurrentWeather(@PathVariable(name = "cityName") String cityName) throws InternalServerErrorException, UnprocessableEntityException {
         String currentLang = LocaleContextHolder.getLocale().getLanguage();
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseAPI(
                 messageSource.getMessage("cities.weather.current", null, LocaleContextHolder.getLocale()),
@@ -55,7 +55,7 @@ public class CitiesController {
     @GetMapping("/{cityName}/weather/forecast")
     @Operation(summary = "Gets the weather forecast in specific city")
     @RateLimitProtection
-    public ResponseEntity<ResponseAPI> getCityWeatherForecast(@PathVariable(name = "cityName") String cityName) throws InternalServerErrorException {
+    public ResponseEntity<ResponseAPI> getCityWeatherForecast(@PathVariable(name = "cityName") String cityName) throws InternalServerErrorException, UnprocessableEntityException {
         String currentLang = LocaleContextHolder.getLocale().getLanguage();
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseAPI(
                 messageSource.getMessage("cities.weather.forecast", null, LocaleContextHolder.getLocale()),

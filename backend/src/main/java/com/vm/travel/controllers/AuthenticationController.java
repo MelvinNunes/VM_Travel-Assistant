@@ -32,7 +32,7 @@ public class AuthenticationController {
     private final UserService userService;
     private final AuthenticationService authenticationService;
 
-    @Operation(summary = "Login using username and password")
+    @Operation(summary = "Login using email and password")
     @PostMapping("/login")
     @RateLimitProtection
     public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid LoginDTO data) throws UnauthorizedException, NotFoundException {

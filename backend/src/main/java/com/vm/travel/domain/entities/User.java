@@ -33,7 +33,8 @@ public class User implements UserDetails {
     private String name;
     private Boolean active = true;
 
-    public User(String login, String password){
+    public User(String login, String password, String name){
+        this.name = name;
         this.login = login;
         this.password = password;
         this.role = Roles.USER;

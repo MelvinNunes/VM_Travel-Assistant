@@ -1,7 +1,6 @@
 package com.vm.travel.domain.services;
 
 import com.vm.travel.domain.entities.User;
-import com.vm.travel.domain.services.UserService;
 import com.vm.travel.dto.request.LoginDTO;
 import com.vm.travel.infrastructure.exceptions.NotFoundException;
 import com.vm.travel.infrastructure.exceptions.UnauthorizedException;
@@ -27,14 +26,14 @@ public class AuthenticationService {
      * @param data the {@link LoginDTO} object containing the user's login credentials.
      * @return a JWT token as a {@link String} if authentication is successful.
      * @throws UnauthorizedException if the authentication fails due to incorrect password or other reasons.
-     * @throws NotFoundException if no user is found with the provided username.
+     * @throws NotFoundException if no user is found with the provided email.
      */
     public String login(LoginDTO data) throws UnauthorizedException, NotFoundException {
-        if (!userService.existsByUsername(data.username())) {
+        if (!userService.existsByUsername(data.email())) {
             throw new NotFoundException(messageSource.getMessage("users.not_found", null, LocaleContextHolder.getLocale()));
         }
         try {
-            var usernamePassword = new UsernamePasswordAuthenticationToken(data.username(), data.password());
+            var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
             var auth = this.authenticationManager.authenticate(usernamePassword);
             return tokenService.generateToken((User) auth.getPrincipal());
         } catch (Exception e) {

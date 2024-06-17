@@ -32,7 +32,7 @@ public class CountriesController {
     @RateLimitProtection
     public ResponseEntity<ResponseAPI> getAllCountries(
             @ParameterObject CountryFilters countryFilters
-    ) throws InternalServerErrorException {
+    ) throws InternalServerErrorException, NotFoundException {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseAPI(
                 messageSource.getMessage("countries.success", null, LocaleContextHolder.getLocale()),
                 countryService.getAllCountries(countryFilters)

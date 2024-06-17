@@ -19,12 +19,19 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepo userRepo;
 
+
+    /**
+     * Registers a new user with the provided registration data.
+     *
+     * @param data the {@link RegisterDTO} object containing the user's registration details.
+     * @return the registered {@link User} object.
+     * @throws ConflictException if a user with the provided username already exists.
+     */
     public User registerUser(RegisterDTO data) throws ConflictException {
         if (this.existsByUsername(data.username())) {
             throw new ConflictException(messageSource.getMessage("users.exists", null, LocaleContextHolder.getLocale()));
         }
         User user = new User(data.username(), data.password());
-        user.setRole(Roles.USER);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepo.save(user);
     }

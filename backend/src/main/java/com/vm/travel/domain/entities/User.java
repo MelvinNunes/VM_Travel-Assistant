@@ -32,6 +32,7 @@ public class User implements UserDetails {
     public User(String login, String password){
         this.login = login;
         this.password = password;
+        this.role = Roles.USER;
     }
 
     @JsonIgnore

@@ -34,6 +34,12 @@ public class CitiesController {
     public ResponseEntity<ResponseAPI> getAllCities(
             @ParameterObject CityFilters cityFilters
     ) throws InternalServerErrorException, UnprocessableEntityException {
+        if (cityFilters.getName() != null && cityFilters.getCountryCode() != null) {
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(new ResponseAPI(
+                    messageSource.getMessage("cities.unprocessable", null, LocaleContextHolder.getLocale()),
+                    null
+            ));
+        }
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseAPI(
                 messageSource.getMessage("cities.success", null, LocaleContextHolder.getLocale()),
                 cityService.getAllCities(cityFilters)

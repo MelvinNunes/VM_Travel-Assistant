@@ -2,14 +2,11 @@ package com.vm.travel.domain.services;
 
 import com.vm.travel.dto.filters.CityFilters;
 import com.vm.travel.dto.response.CityResDTO;
-import com.vm.travel.dto.response.CountryResDTO;
 import com.vm.travel.dto.response.WeatherResDTO;
 import com.vm.travel.infrastructure.exceptions.InternalServerErrorException;
 import com.vm.travel.infrastructure.exceptions.NotFoundException;
 import com.vm.travel.infrastructure.exceptions.UnprocessableEntityException;
 import com.vm.travel.infrastructure.utils.WeatherConversor;
-import com.vm.travel.integrations.exchangerates.ExchangeRatesClient;
-import com.vm.travel.integrations.exchangerates.dto.ExchangeRateRes;
 import com.vm.travel.integrations.geodb.GeoDbClient;
 import com.vm.travel.integrations.geodb.dto.GeoDbRes;
 import com.vm.travel.integrations.openweather.OpenWeatherClient;
@@ -24,7 +21,6 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
@@ -45,14 +41,9 @@ public class CityService {
      * @throws InternalServerErrorException if there is an issue retrieving the city details.
      */
     @Cacheable(value = "cities", key = "#cityFilters.name != null ? #cityFilters.name : #cityFilters.countryCode != null ? 'country:' + #cityFilters.countryCode : 'default'")
-    public List<CityResDTO> getAllCities(CityFilters cityFilters) throws InternalServerErrorException, UnprocessableEntityException {
+    public List<CityResDTO> getAllCities(CityFilters cityFilters) throws InternalServerErrorException {
         CompletableFuture<GeoDbRes> citiesFuture;
         List<CityResDTO> cities;
-
-        if (cityFilters.getName() != null && cityFilters.getCountryCode() != null) {
-            throw new UnprocessableEntityException(messageSource.getMessage("cities.unprocessable", null, LocaleContextHolder.getLocale()));
-        }
-
         if (cityFilters.getName() != null) {
             citiesFuture = geoDbClient.getCitiesByQuery(cityFilters.getName());
         } else if (cityFilters.getCountryCode() != null) {
@@ -60,7 +51,6 @@ public class CityService {
         } else {
             citiesFuture = geoDbClient.getFirstCities();
         }
-
         try {
             cities = this.getCitiesFromFuture(citiesFuture);
         } catch (Exception e) {
@@ -98,6 +88,7 @@ public class CityService {
      * Retrieves the current weather details of a city by its name from a cache or external API.
      *
      * @param cityName the name of the city to retrieve weather details for.
+     * @param lang the current language of the API.
      * @return a {@link WeatherData} object containing the current weather details of the city.
      * @throws InternalServerErrorException if there is an issue retrieving the weather details.
      */
@@ -105,7 +96,6 @@ public class CityService {
     public WeatherResDTO getCityCurrentWeatherByCityName(String cityName, String lang) throws InternalServerErrorException, UnprocessableEntityException {
         CompletableFuture<WeatherData> weatherFuture = weatherClient.getCurrentCityWeatherByCityName(cityName, lang);
         WeatherData data;
-
         try {
             data = weatherFuture.get();
         } catch (Exception e) {
@@ -122,6 +112,7 @@ public class CityService {
      * Retrieves the weather forecast details of a city by its name for the next five days from a cache or external API.
      *
      * @param cityName the name of the city to retrieve weather forecast details for.
+     * @param lang the current language of the API.
      * @return a list of {@link WeatherData} objects containing the weather forecast details for the city.
      * @throws InternalServerErrorException if there is an issue retrieving the weather forecast details.
      */

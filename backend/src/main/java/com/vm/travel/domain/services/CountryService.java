@@ -18,6 +18,7 @@ import com.vm.travel.integrations.worldbank.dto.GDPResponse;
 import com.vm.travel.integrations.worldbank.dto.PopulationData;
 import com.vm.travel.integrations.worldbank.dto.PopulationResponse;
 import lombok.RequiredArgsConstructor;
+import org.aspectj.weaver.ast.Not;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
@@ -37,7 +38,6 @@ public class CountryService {
     private final RestCountriesClient restCountriesClient;
     private final WorldBankApiClient worldBankApiClient;
     private final ExchangeRatesClient exchangeRatesClient;
-    private final CityService cityService;
     private final MessageSource messageSource;
     private final Logger logger = LoggerFactory.getLogger(CountryService.class);
 
@@ -49,20 +49,24 @@ public class CountryService {
      * @throws InternalServerErrorException if there is an issue retrieving the country list.
      */
     @Cacheable(value = "countries", key = "#countryFilters.region == null ? 'default' : #countryFilters.region")
-    public List<CountryResDTO> getAllCountries(CountryFilters countryFilters) throws InternalServerErrorException {
-        CompletableFuture<RestCountriesResponse> data;
-
+    public List<CountryResDTO> getAllCountries(CountryFilters countryFilters) throws InternalServerErrorException, NotFoundException {
+        CompletableFuture<RestCountriesResponse> restCountriesResponseCompletableFuture;
+        RestCountriesResponse data;
         if (countryFilters.getRegion() != null) {
-            data = restCountriesClient.getAllCountriesByRegion(countryFilters.getRegion());
+            restCountriesResponseCompletableFuture = restCountriesClient.getAllCountriesByRegion(countryFilters.getRegion());
         } else {
-            data = restCountriesClient.getAllCountries();
+            restCountriesResponseCompletableFuture = restCountriesClient.getAllCountries();
         }
         try {
-            return data.get().restCountriesData().stream().map(this::buildCountryVM).collect(Collectors.toList());
+            data = restCountriesResponseCompletableFuture.get();
         } catch (Exception e) {
             logger.error("Error in CountryService, getAllCountries, exception: ", e);
             throw new InternalServerErrorException(messageSource.getMessage("server.internal_error", null, LocaleContextHolder.getLocale()));
         }
+        if (data == null) {
+            throw new NotFoundException(messageSource.getMessage("countries.region.not_found", null, LocaleContextHolder.getLocale()));
+        }
+        return data.restCountriesData().stream().map(this::buildCountryVM).collect(Collectors.toList());
     }
 
     /**
@@ -76,13 +80,17 @@ public class CountryService {
     @Cacheable(value = "countryDetails", key = "#countryName")
     public CountryResDTO getCountryDetailsByCountryName(String countryName) throws InternalServerErrorException, NotFoundException {
         CompletableFuture<RestCountriesResponse> data = restCountriesClient.getAllCountriesByCountryName(countryName);
-        List<RestCountriesData> countries;
+        RestCountriesResponse response;
         try {
-            countries = data.get().restCountriesData();
+            response = data.get();
         } catch (Exception e) {
             logger.error("Error in CountryService, getCountryDetailsByCountryName, exception: ", e);
             throw new InternalServerErrorException(messageSource.getMessage("server.internal_error", null, LocaleContextHolder.getLocale()));
         }
+        if (response == null) {
+            throw new NotFoundException(messageSource.getMessage("countries.not_found", null, LocaleContextHolder.getLocale()));
+        }
+        List<RestCountriesData> countries = response.restCountriesData();
         if (countries.isEmpty()) {
             throw new NotFoundException(messageSource.getMessage("countries.not_found", null, LocaleContextHolder.getLocale()));
         }

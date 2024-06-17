@@ -21,6 +21,14 @@ public class AuthenticationService {
     private final TokenService tokenService;
     private final UserService userService;
 
+    /**
+     * Authenticates a user based on the provided login data and returns a JWT token if successful.
+     *
+     * @param data the {@link LoginDTO} object containing the user's login credentials.
+     * @return a JWT token as a {@link String} if authentication is successful.
+     * @throws UnauthorizedException if the authentication fails due to incorrect password or other reasons.
+     * @throws NotFoundException if no user is found with the provided username.
+     */
     public String login(LoginDTO data) throws UnauthorizedException, NotFoundException {
         if (!userService.existsByUsername(data.username())) {
             throw new NotFoundException(messageSource.getMessage("users.not_found", null, LocaleContextHolder.getLocale()));

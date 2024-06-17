@@ -9,6 +9,7 @@ import com.vm.travel.infrastructure.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -36,13 +37,24 @@ public class UserService {
         return userRepo.save(user);
     }
 
-    public User findById(String id) throws NotFoundException {
-        return userRepo.findById(id).orElseThrow(() -> new NotFoundException(messageSource.getMessage("users.not_found", null, LocaleContextHolder.getLocale())));
+    /**
+     * Retrieves the currently authenticated user.
+     *
+     * @return the {@link User} object representing the currently authenticated user.
+     * @throws NotFoundException if no authenticated user is found.
+     */
+    public User onlineUser() throws NotFoundException {
+        return findByLogin(getAuthenticatedUserId());
+    }
+
+    private String getAuthenticatedUserId(){
+        return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 
     public User findByLogin(String login) throws NotFoundException {
         return userRepo.findByLogin(login).orElseThrow(() -> new NotFoundException(messageSource.getMessage("users.not_found", null, LocaleContextHolder.getLocale())));
     }
+
 
     public boolean existsByUsername(String login){
         return userRepo.existsByLogin(login);

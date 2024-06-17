@@ -22,11 +22,15 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
+    @Column(name = "login", nullable = false)
     private String login;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Column(name = "password", nullable = false)
     private String password;
     @Enumerated(EnumType.STRING)
     private Roles role;
+    @Column(name = "name")
+    private String name;
     private Boolean active = true;
 
     public User(String login, String password){

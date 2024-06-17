@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
-@Tag(name = "Health", description = "This collection manages the API health collection")
+@Tag(name = "Health", description = "This collection manages API health collection")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/health")

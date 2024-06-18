@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { CitySample } from "@/models/city"
 import { Users } from "lucide-react"
 import { useTranslation } from "react-i18next"
-import { formatPopulation } from "@/utils/formater"
+import Formatter from "@/utils/formater"
 
 export default function CitySampleCard({ city }: { city: CitySample }) {
     const { t } = useTranslation()
@@ -17,7 +17,7 @@ export default function CitySampleCard({ city }: { city: CitySample }) {
                     <h3 className="text-2xl font-bold">{city.name}</h3>
                     <div className="flex gap-2 items-center bg-gray-100 px-3 py-1 rounded-full text-sm font-medium dark:bg-gray-800">
                         <Users className="w-5 h-5" />
-                        {formatPopulation(city.population)}
+                        {Formatter.formatPopulation(city.population)}
                     </div>
                 </div>
                 <div className="flex items-center gap-2">

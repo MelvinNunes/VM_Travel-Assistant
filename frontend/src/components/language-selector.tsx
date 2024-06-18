@@ -8,7 +8,7 @@ export default function LanguageSelector() {
         <div className="flex items-center gap-4">
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                    <Button variant="outline" className="flex items-center gap-2">
+                    <Button variant="outline" className="flex items-center gap-2 dark:text-white">
                         <GlobeIcon />
                         <span>{t('lang.label')}</span>
                         <ChevronDownIcon />

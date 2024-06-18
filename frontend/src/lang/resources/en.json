@@ -7,5 +7,13 @@
             "pt": "Portuguese"
         }
     },
-    "hello": "Hello"
+    "login": "Login",
+    "logout": "Logout",
+    "hero": {
+        "title": "Discover Your Next Adventure.",
+        "description": "Your ultimate travel research companion.",
+        "search": {
+            "placeholder": "Search for a city"
+        }
+    }
 }

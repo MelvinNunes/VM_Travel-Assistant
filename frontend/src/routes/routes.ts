@@ -3,9 +3,10 @@ export type Route = {
   path: string;
 };
 
+/* For now, lets keep it clean */
 export const Routes: Route[] = [
-  {
-    name: "Home",
-    path: "/",
-  },
+  // {
+  //   name: "Home",
+  //   path: "/",
+  // },
 ];

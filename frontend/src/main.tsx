@@ -11,11 +11,14 @@ import {
 import { ThemeProvider } from './providers/ThemeProvider.tsx';
 import { Layout } from './layouts/Main.tsx';
 import Home from './pages/Home.tsx';
+import DefaultErrorPage from './pages/Error.tsx';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
+    errorElement: <DefaultErrorPage />,
+    loader: () => import('./pages/Loading.tsx'),
     children: [
       {
         index: true,

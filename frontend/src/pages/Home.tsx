@@ -1,11 +1,11 @@
-import { useTranslation } from "react-i18next";
+import { Hero } from "@/sections/Hero";
 
 export default function Home() {
-    const { t } = useTranslation();
-
     return (
         <div>
-            <h1>{t('hello')}</h1>
+            <Hero />
         </div>
     )
 }
+
+

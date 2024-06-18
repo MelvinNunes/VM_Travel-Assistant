@@ -1,3 +1,11 @@
 {
+    "lang": {
+        "label": "Language",
+        "select": "Select Language",
+        "options": {
+            "en": "English",
+            "pt": "Portuguese"
+        }
+    },
     "hello": "Hello"
 }

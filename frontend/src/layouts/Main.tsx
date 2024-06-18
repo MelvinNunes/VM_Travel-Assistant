@@ -18,6 +18,7 @@ import { Outlet } from "react-router-dom"
 import { NavbarItems } from "@/sections/NavbarItems"
 import { Routes } from "@/routes/routes"
 import { ModeToggle } from "@/components/ui/theme-toggler"
+import LanguageSelector from "@/components/language-selector"
 
 
 export function Layout() {
@@ -57,6 +58,7 @@ export function Layout() {
                 </Sheet>
                 <div className="flex w-full items-center justify-end gap-4 md:ml-auto md:gap-2 lg:gap-4">
                     <ModeToggle />
+                    <LanguageSelector />
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button variant="secondary" size="icon" className="rounded-full">

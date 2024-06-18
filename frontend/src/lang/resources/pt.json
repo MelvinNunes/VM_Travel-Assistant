@@ -1,3 +1,11 @@
 {
+    "lang": {
+        "label": "Língua",
+        "select": "Seleccione a língua",
+        "options": {
+            "en": "Inglês",
+            "pt": "Português"
+        }
+    },
     "hello": "Olá"
 }

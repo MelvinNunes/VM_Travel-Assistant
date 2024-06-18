@@ -3,9 +3,6 @@ spring:
     active: ${APP_PROFILE:dev}
   server:
     port: ${SERVER_PORT:8080}
-  doc:
-    swagger-ui:
-      path: /docs.html
   messages:
     always-use-message-format: false
     basename: messages
@@ -14,6 +11,10 @@ spring:
     use-code-as-default-message: false
   jackson:
     property-naming-strategy: SNAKE_CASE
+
+springdoc:
+  swagger-ui:
+    path: /docs.html
 
 app:
   rate:

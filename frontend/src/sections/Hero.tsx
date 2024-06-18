@@ -1,9 +1,11 @@
 import { Input } from "@/components/ui/input";
 import { SearchIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 export function Hero() {
     const { t } = useTranslation()
+    const navigate = useNavigate()
 
     return (
         <div className="flex flex-col justify-center items-center bg-hero bg-cover w-full h-72 px-6">
@@ -16,8 +18,9 @@ export function Hero() {
                     <SearchIcon className="w-5 h-5 text-gray-400 dark:text-gray-500" />
                 </div>
                 <Input
-                    type="search"
+                    type="text"
                     placeholder={t('hero.search.placeholder')}
+                    onClick={() => navigate("search")}
                     className="w-full rounded-md border border-gray-300 px-4 py-2 pl-10 text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:focus:border-blue-500"
                 />
             </div>

@@ -1,4 +1,5 @@
 {
+    "title": "Destinos",
     "lang": {
         "label": "Language",
         "select": "Select Language",
@@ -15,5 +16,9 @@
         "search": {
             "placeholder": "Search for a city"
         }
+    },
+    "search_page": {
+        "title": "Search For Cities",
+        "recommendation_title": "Some cities you might like"
     }
 }

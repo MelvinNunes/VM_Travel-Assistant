@@ -1,6 +1,7 @@
 import RecommendedActivityCard from "@/components/cards/recommended-activity-card";
 import { CitiesCarousel } from "@/components/cities-carousel";
 import { SectionTitle } from "@/components/section-title";
+import { useCities } from "@/data/city";
 import { africanCities, asianCities, europeanCities } from "@/data/static/cities";
 import { GetStarted } from "@/sections/GetStartedBanner";
 import { Hero } from "@/sections/Hero";
@@ -8,6 +9,9 @@ import { useTranslation } from "react-i18next";
 
 export default function Home() {
     const { t } = useTranslation()
+
+    const { cities } = useCities({})
+    console.log(cities)
 
     return (
         <div className="flex flex-col w-full">

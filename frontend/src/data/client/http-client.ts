@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from "axios";
-import { getAuthToken, removeAuthToken } from "./token.utils";
+import { getAuthToken } from "./token.utils";
 import { ConfigValue } from "@/config";
 
 const Axios: AxiosInstance = axios.create({
@@ -27,20 +27,20 @@ Axios.interceptors.request.use(
   }
 );
 
-Axios.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (
-      (error.response && error.response.status === 401) ||
-      (error.response && error.response.status === 403) ||
-      (error.response &&
-        error.response.data.message === "PIXER_ERROR.NOT_AUTHORIZED")
-    ) {
-      removeAuthToken();
-    }
-    return Promise.reject(error);
-  }
-);
+// Axios.interceptors.response.use(
+//   (response) => response,
+//   (error) => {
+//     if (
+//       (error.response && error.response.status === 401) ||
+//       (error.response && error.response.status === 403) ||
+//       (error.response &&
+//         error.response.data.message === "PIXER_ERROR.NOT_AUTHORIZED")
+//     ) {
+//       removeAuthToken();
+//     }
+//     return Promise.reject(error);
+//   }
+// );
 
 export class HttpClient {
   static async get<T>(url: string, params?: unknown) {

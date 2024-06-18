@@ -17,6 +17,8 @@ import { Routes } from "@/routes/routes"
 import { ModeToggle } from "@/components/ui/theme-toggler"
 import LanguageSelector from "@/components/language-selector"
 import { useTranslation } from "react-i18next"
+import { Logo } from "@/components/logo"
+import Footer from "@/sections/Footer"
 
 
 export function Layout() {
@@ -26,10 +28,7 @@ export function Layout() {
         <div className="flex min-h-screen w-full flex-col">
             <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
                 <nav className="flex-col gap-6 text-md font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-lg lg:gap-6">
-                    <a href="/" className="flex gap-3 items-center mr-10">
-                        <img src="/logo.svg" alt="app logo" />
-                        <h1 className="uppercase font-bold text-gray-500">{t('title')}</h1>
-                    </a>
+                    <Logo title={t('title')} isFooter={false} />
                     <NavbarItems routes={Routes} />
                 </nav>
                 <div className="flex w-full items-center justify-end gap-4 md:ml-auto md:gap-2 lg:gap-4">
@@ -55,6 +54,7 @@ export function Layout() {
             <main className="flex flex-1 flex-col gap-4 md:gap-8">
                 <Outlet />
             </main>
+            <Footer />
         </div>
     )
 }

@@ -20,5 +20,25 @@
     "search_page": {
         "title": "Search For Cities",
         "recommendation_title": "Some cities you might like"
+    },
+    "footer": {
+        "description": "Destinos is your ideal companion for exploring the world. Created by travel lovers, our goal is to simplify planning your adventures by offering essential information about cities around the world.",
+        "find_us": "Find Us",
+        "copyright": "Copyright © 2024 Destinos - All rights reserved.",
+        "privacy": "Privacy Policies",
+        "usage": "Terms of use",
+        "cookies": "Cookie Preferences"
+    },
+    "home": {
+        "section": {
+            "best_africa": {
+                "title": "Best African cities",
+                "description": "Africa has beach destinations"
+            },
+            "best_europe": {
+                "title": "Best European cities",
+                "description": "Europe is a treasure trove of captivating cities, each offering a unique blend of history, culture, and modern attractions"
+            }
+        }
     }
 }

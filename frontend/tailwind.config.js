@@ -18,7 +18,9 @@ module.exports = {
     },
     extend: {
       backgroundImage: {
-        hero: "url('/hero.jpeg')",
+        hero: "url('/hero.jpg')",
+        getStarted: "url('/get_started_placeholder.jpeg')",
+        getStartedTwo: "url('/get_started_placeholder_2.jpeg')",
       },
       colors: {
         border: "hsl(var(--border))",

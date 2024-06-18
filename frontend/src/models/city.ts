@@ -12,3 +12,11 @@ export type City = {
   population: number;
   place_type: string;
 };
+
+export type CitySample = {
+  id: number;
+  name: string;
+  country: string;
+  cityImage: string;
+  population: number;
+};

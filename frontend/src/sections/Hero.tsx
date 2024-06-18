@@ -13,7 +13,7 @@ export function Hero() {
                 <h1 className="text-3xl font-bold text-white">{t('hero.title')}</h1>
                 <p className="text-white">{t('hero.description')}</p>
             </div>
-            <div className="relative w-full max-w-lg mt-8">
+            <div className="relative w-full max-w-lg mt-8 z-0">
                 <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                     <SearchIcon className="w-5 h-5 text-gray-400 dark:text-gray-500" />
                 </div>

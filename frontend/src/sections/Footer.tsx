@@ -33,7 +33,7 @@ export default function Footer() {
     const { t } = useTranslation()
 
     return (
-        <div className="w-full h-full bg-slate-500 px-5">
+        <div className="w-full h-full bg-slate-500 px-5 md:px-20 lg:px-40 mt-10">
             <div className="pt-10">
                 <Logo title={t('title')} isFooter />
                 <p className="text-white mt-2">{t('footer.description')}</p>

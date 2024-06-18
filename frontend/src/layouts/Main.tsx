@@ -26,7 +26,7 @@ export function Layout() {
 
     return (
         <div className="flex min-h-screen w-full flex-col">
-            <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
+            <header className="sticky top-0 flex z-50 h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
                 <nav className="flex-col gap-6 text-md font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-lg lg:gap-6">
                     <Logo title={t('title')} isFooter={false} />
                     <NavbarItems routes={Routes} />

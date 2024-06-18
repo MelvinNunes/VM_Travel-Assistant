@@ -38,7 +38,24 @@
             "best_europe": {
                 "title": "Best European cities",
                 "description": "Europe is a treasure trove of captivating cities, each offering a unique blend of history, culture, and modern attractions"
+            },
+            "best_asia": {
+                "title": "Best cities in Asia",
+                "description": "Asia is a continent of contrasts, where ancient traditions blend seamlessly with modern innovations."
+            }
+        },
+        "recommendation_card": {
+            "holidays": {
+                "title": "Holidays",
+                "description": "View recommendations"
+            },
+            "work": {
+                "title": "Work remotely",
+                "description": "View recommendations"
             }
         }
+    },
+    "city_sample_card": {
+        "details_button_label": "Details"
     }
 }

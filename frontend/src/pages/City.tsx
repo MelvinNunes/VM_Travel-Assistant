@@ -1,10 +1,11 @@
 import { useState } from "react"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
-import { CloudSunIcon, CurrencyIcon, DollarSignIcon, MapPinIcon, TrendingUpIcon, UsersIcon } from "lucide-react"
+import { CurrencyIcon, DollarSignIcon, MapPinIcon, TrendingUpIcon, UsersIcon } from "lucide-react"
 import { CurrentWeather } from "@/sections/city/CurrentWeather"
 import { CountryDetails } from "@/sections/city/CountryDetails"
 import { useCity } from "@/data/city"
 import { useParams } from "react-router-dom"
+import { WeatherForecast } from "@/sections/city/WeatherForecast"
 
 export default function CityScreen() {
     const [isAuthenticated,] = useState(false)
@@ -28,22 +29,7 @@ export default function CityScreen() {
                                 {city && <CurrentWeather city={city} />}
                                 {city && <CountryDetails city={city} />}
                             </div>
-                            <Card>
-                                <CardHeader>
-                                    <CardTitle>Weather Forecast</CardTitle>
-                                </CardHeader>
-                                <CardContent className="grid grid-cols-5 gap-4">
-                                    {[1, 2, 3, 4, 5].map((day) => (
-                                        <div key={day} className="flex flex-col items-center gap-2 text-center">
-                                            <div className="font-medium">{day === 1 ? "Today" : `Day ${day}`}</div>
-                                            <CloudSunIcon className="h-8 w-8 text-primary" />
-                                            <div>
-                                                {day % 2 === 0 ? "24\u00B0C" : "20\u00B0C"} /{day % 2 === 0 ? "18\u00B0C" : "15\u00B0C"}
-                                            </div>
-                                        </div>
-                                    ))}
-                                </CardContent>
-                            </Card>
+                            {city && <WeatherForecast city={city} />}
                         </div>
                         <div className="grid gap-4">
                             {isAuthenticated ? (

@@ -7,7 +7,7 @@ import { ReloadIcon } from "@radix-ui/react-icons"
 import { useTranslation } from "react-i18next";
 import { Label } from "@/components/ui/label";
 
-export default function Login() {
+export default function LoginScreen() {
     const { t } = useTranslation()
     const { login, isPending } = useLogin()
 

@@ -127,6 +127,12 @@
         "details_button_label": "Details"
     },
     "current_weather": {
-        "title": "Current Weather"
+        "title": "Current Weather",
+        "feels": "Feels like",
+        "wind": "Wind:",
+        "humidity": "Humidity:"
+    },
+    "country": {
+        "title": "Country"
     }
 }

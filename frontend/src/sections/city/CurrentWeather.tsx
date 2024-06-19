@@ -14,8 +14,8 @@ export function CurrentWeather({ city }: { city: City }) {
                 <CardTitle>{t('current_weather.title')}</CardTitle>
             </CardHeader>
             <CardContent className="flex items-center justify-center gap-4">
-                <div className="grid w-full items-center justify-center gap-4 md:grid-cols-2 md:mt-10">
-                    <div className="flex items-center gap-2">
+                <div className="grid md:flex w-full items-center justify-center h-full gap-4 md:grid-cols-2 md:mt-10">
+                    <div className="flex flex-col items-center gap-2">
                         <CloudIcon className="h-12 w-12 text-primary" />
                         <div>
                             <div className="text-4xl font-bold">{weather?.temperature}°C</div>
@@ -23,9 +23,9 @@ export function CurrentWeather({ city }: { city: City }) {
                         </div>
                     </div>
                     <div className="text-sm text-muted-foreground text-center">
-                        <div>Feels like {weather?.temperature_feels}°C</div>
-                        <div>Wind: {weather?.wind_speed} km/h</div>
-                        <div>Humidity: {weather?.humidity_percentage}%</div>
+                        <div>{t('current_weather.feels')} {weather?.temperature_feels}°C</div>
+                        <div>{t('current_weather.wind')} {weather?.wind_speed} km/h</div>
+                        <div>{t('current_weather.humidity')} {weather?.humidity_percentage}%</div>
                     </div>
                 </div>
             </CardContent>

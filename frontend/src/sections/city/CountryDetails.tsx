@@ -3,8 +3,11 @@ import { useCountry } from "@/data/country";
 import { City } from "@/models/city";
 import { Country } from "@/models/country";
 import { FlagIcon, GlobeIcon } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export function CountryDetails({ city }: { city: City }) {
+    const { t } = useTranslation()
+
     const { country, isFetching } = useCountry(city.country)
     if (isFetching) {
         return (
@@ -13,14 +16,15 @@ export function CountryDetails({ city }: { city: City }) {
             </div>
         )
     }
-    return CountryData({ country: country })
+
+    return CountryData({ country: country, title: t('country.title') })
 }
 
-function CountryData({ country }: { country?: Country }) {
+function CountryData({ country, title }: { country?: Country, title: string }) {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Country</CardTitle>
+                <CardTitle>{title}</CardTitle>
             </CardHeader>
             <CardContent className="grid gap-2">
                 <div className="grid gap-2">

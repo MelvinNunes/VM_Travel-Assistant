@@ -7,7 +7,7 @@ import { useFormik } from "formik";
 import { useTranslation } from "react-i18next";
 import * as Yup from 'yup';
 
-export default function Register() {
+export default function RegisterScreen() {
     const { t } = useTranslation()
     const { register, isPending } = useRegister()
 

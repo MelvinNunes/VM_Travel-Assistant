@@ -21,3 +21,25 @@ export function useWeather(cityName: string) {
     error,
   };
 }
+
+type WeatherForecastRes = {
+  data: WeatherData[];
+  message: string;
+};
+
+export function useWeatherForecast(cityName: string) {
+  const { isLoading, isFetching, error, data } = useQuery({
+    queryKey: ["getCityWeatherForecast", cityName],
+    queryFn: () =>
+      HttpClient.get<WeatherForecastRes>(
+        API_ENDPOINTS.WEATHER_FORECAST(cityName),
+        null
+      ),
+  });
+  return {
+    forecast: data?.data,
+    isLoading,
+    isFetching,
+    error,
+  };
+}

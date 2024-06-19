@@ -10,7 +10,7 @@ import HeartIcon from "@/assets/heart-check.svg"
 import { useAtom } from "jotai";
 import { isUserAuthenticated } from "@/atoms/auth";
 
-export default function Home() {
+export default function HomeScreen() {
     const { t } = useTranslation()
     const [isUserAuth] = useAtom(isUserAuthenticated)
 

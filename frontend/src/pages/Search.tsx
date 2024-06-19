@@ -8,7 +8,7 @@ import { SearchIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-export default function Search() {
+export default function SearchScreen() {
     const { t } = useTranslation()
     const queryClient = useQueryClient()
     const [query, setQuery] = useState<string>("")

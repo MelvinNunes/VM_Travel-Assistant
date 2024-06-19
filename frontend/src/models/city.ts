@@ -3,7 +3,7 @@ export type City = {
   type: string;
   city: string | null;
   name: string;
-  country: string | null;
+  country: string;
   country_code: string | null;
   region: string;
   region_code: string;

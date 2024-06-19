@@ -6,7 +6,7 @@ export default function RecommendedActivityCard({ title, description, background
             <img
                 src={backgroundImagePath}
                 alt="Card background"
-                className="absolute inset-0 h-full w-full object-cover opacity-90"
+                className="absolute inset-0 h-full w-full object-cover"
             />
             <CardContent className="relative z-10 p-6 items-end text-white">
                 <div className="absolute -bottom-36 md:-bottom-60 left-5">

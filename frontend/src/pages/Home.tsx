@@ -15,7 +15,7 @@ export default function Home() {
     const [isUserAuth] = useAtom(isUserAuthenticated)
 
     return (
-        <div className="flex flex-col w-full">
+        <main className="flex flex-col w-full">
             <Hero />
             <div className="bg-slate-50 mb-4">
                 <div className="bg-slate-200 flex gap-3 w-full items-center md:justify-center h-20 border border-slate-300 dark:border-slate-900 dark:bg-slate-700 px-4">
@@ -58,7 +58,7 @@ export default function Home() {
                     </div>
                 </div>
             </div>
-        </div>
+        </main>
     )
 }
 

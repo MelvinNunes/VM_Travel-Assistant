@@ -27,14 +27,15 @@ type CityRes = {
   data: City;
 };
 
-export function useCity(name: string) {
-  const { isLoading, error, data } = useQuery({
-    queryKey: ["getCityDetails", name],
-    queryFn: () => HttpClient.get<CityRes>(API_ENDPOINTS.CITY(name), null),
+export function useCity(cityName?: string) {
+  const { isLoading, isFetching, error, data } = useQuery({
+    queryKey: ["getCityDetails", cityName],
+    queryFn: () => HttpClient.get<CityRes>(API_ENDPOINTS.CITY(cityName), null),
   });
   return {
-    city: data,
+    city: data?.data,
     isLoading,
+    isFetching,
     error,
   };
 }

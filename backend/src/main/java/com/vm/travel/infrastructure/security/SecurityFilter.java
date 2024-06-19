@@ -15,9 +15,14 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
@@ -25,6 +30,13 @@ public class SecurityFilter extends OncePerRequestFilter {
     private final MessageSource messageSource;
     private final TokenService tokenService;
     private final UserRepo userRepo;
+    private final Set<String> skipUrls = new HashSet<>(List.of(
+            "/api/v1/cities/{cityName:.+}",
+            "/api/v1/countries/{countryName:.+}",
+            "/api/v1/cities/{cityName:.+}/weather/current",
+            "/api/v1/cities/{cityName:.+}/weather/forecast"
+    ));
+    private final AntPathMatcher pathMatcher = new AntPathMatcher();
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,@NonNull HttpServletResponse response,@NonNull FilterChain filterChain) throws ServletException, IOException {
@@ -41,6 +53,11 @@ public class SecurityFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
         filterChain.doFilter(request, response);
+    }
+
+    @Override
+    protected boolean shouldNotFilter(@NonNull HttpServletRequest request) {
+       return skipUrls.stream().anyMatch(p -> pathMatcher.match(p, request.getServletPath()));
     }
 
     private String recoverToken(HttpServletRequest request){

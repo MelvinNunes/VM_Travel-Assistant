@@ -16,7 +16,7 @@ import Search from './pages/Search.tsx';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Register from './pages/Register.tsx';
 import Login from './pages/Login.tsx';
-import City from './pages/City.tsx';
+import CityScreen from './pages/City.tsx';
 
 const router = createBrowserRouter([
   {
@@ -43,7 +43,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/city/:name",
-        element: <City />
+        element: <CityScreen />
       }
     ]
   },

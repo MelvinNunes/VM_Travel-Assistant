@@ -125,5 +125,8 @@
     },
     "city_sample_card": {
         "details_button_label": "Details"
+    },
+    "current_weather": {
+        "title": "Current Weather"
     }
 }

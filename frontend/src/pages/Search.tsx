@@ -21,7 +21,7 @@ export default function Search() {
     }, [query])
 
     return (
-        <div className="flex flex-col items-center w-full">
+        <main className="flex flex-col items-center w-full">
             {/* Search Input */}
             <div className="flex justify-center w-full px-5">
                 <div className="relative w-full max-w-2xl my-8">
@@ -41,7 +41,7 @@ export default function Search() {
 
             <h1 className="text-slate-400 font-medium my-3">{query ? t('search_page.results') : t('search_page.recommendation_title')}</h1>
             {isFetching ? <SkeletonForCities /> : <CitiesYouMightLike cities={cities} />}
-        </div>
+        </main>
     )
 }
 

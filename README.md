@@ -1,5 +1,7 @@
 # Coding Challenge: Travel Assistant Web-App
 
+Welcome to the Travel Assistant repository. This repository is structured as a monorepo, meaning it contains multiple projects within a single repository. This approach allows us to manage and maintain all related projects in one place, ensuring consistency and simplifying dependency management.
+
 - Objective
 
 Develop a comprehensive travel assistant web application that allows users to search for a destination

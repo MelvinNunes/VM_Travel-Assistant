@@ -20,12 +20,14 @@ import { useTranslation } from "react-i18next"
 import { Logo } from "@/components/logo"
 import Footer from "@/sections/Footer"
 import { Toaster } from "@/components/ui/toaster"
+import { useAtom } from "jotai"
+import { isUserAuthenticated } from "@/atoms/auth"
 
 
 export function Layout() {
     const { t } = useTranslation()
     const navigate = useNavigate()
-    const isLoggedIn = false
+    const [isLoggedIn] = useAtom(isUserAuthenticated)
 
     return (
         <div className="flex min-h-screen w-full flex-col">

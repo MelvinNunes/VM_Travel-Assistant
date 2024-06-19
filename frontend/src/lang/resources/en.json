@@ -8,6 +8,11 @@
             "pt": "Portuguese"
         }
     },
+    "error": {
+        "title": "Oops! Your destination plans have gone off the map!",
+        "description": "It looks like the page you're looking for has disappeared into the abyss. Don't worry, we'll help you find your way back.",
+        "home": "Take me back home"
+    },
     "login": "Login",
     "logout": "Logout",
     "register": "Register",

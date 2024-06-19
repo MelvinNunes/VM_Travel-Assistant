@@ -132,21 +132,26 @@ public class CityService {
         return response.list().stream().map(this::buildWeatherResDTO).collect(Collectors.toList());
     }
 
-    private List<CityResDTO> getCitiesFromFuture(CompletableFuture<GeoDbRes> completableFuture) throws ExecutionException, InterruptedException {
-        return completableFuture.get().data().stream().map(city -> new CityResDTO(
-                city.id(),
-                city.type(),
-                city.city(),
-                city.name(),
-                city.country(),
-                city.countryCode(),
-                city.region(),
-                city.regionCode(),
-                city.latitude(),
-                city.longitude(),
-                city.population(),
-                city.placeType()
-        )).collect(Collectors.toList());
+    private List<CityResDTO> getCitiesFromFuture(CompletableFuture<GeoDbRes> completableFuture) throws InternalServerErrorException {
+        try {
+            return completableFuture.get().data().stream().map(city -> new CityResDTO(
+                    city.id(),
+                    city.type(),
+                    city.city(),
+                    city.name(),
+                    city.country(),
+                    city.countryCode(),
+                    city.region(),
+                    city.regionCode(),
+                    city.latitude(),
+                    city.longitude(),
+                    city.population(),
+                    city.placeType()
+            )).collect(Collectors.toList());
+        } catch (Exception e) {
+            logger.error("Error in getCitiesFromFuture, probably the issue is with the connection: ", e);
+            throw new InternalServerErrorException(messageSource.getMessage("server.internal_error", null, LocaleContextHolder.getLocale()));
+        }
     }
 
     private WeatherResDTO buildWeatherResDTO(WeatherData weatherData) {

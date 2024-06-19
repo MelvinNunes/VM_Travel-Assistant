@@ -1,21 +1,29 @@
 import RecommendedActivityCard from "@/components/cards/recommended-activity-card";
 import { CitiesCarousel } from "@/components/cities-carousel";
 import { SectionTitle } from "@/components/section-title";
-import { useCities } from "@/data/city";
 import { africanCities, asianCities, europeanCities } from "@/data/static/cities";
 import { GetStarted } from "@/sections/GetStartedBanner";
 import { Hero } from "@/sections/Hero";
 import { useTranslation } from "react-i18next";
+import HomeIcon from "@/assets/home-check.svg"
+import HeartIcon from "@/assets/heart-check.svg"
 
 export default function Home() {
     const { t } = useTranslation()
 
-    const { cities } = useCities({})
-    console.log(cities)
-
     return (
         <div className="flex flex-col w-full">
             <Hero />
+            <div className="bg-slate-50 mb-4">
+                <div className="bg-slate-200 flex gap-3 w-full items-center md:justify-center h-20 border border-slate-300 px-4">
+                    <img src={HomeIcon} alt="home-icon" className="w-6 h-6" />
+                    <p className="text-slate-600 font-medium">{t('home.promo.one.title')}</p>
+                </div>
+                <div className="bg-slate-200 flex gap-3 w-full items-center md:justify-center h-20 border border-slate-300 px-4">
+                    <img src={HeartIcon} alt="home-icon" className="w-6 h-6" />
+                    <p className="text-slate-600 font-medium">{t('home.promo.two.title')}</p>
+                </div>
+            </div>
             {/* Popular Static Destinations to improve apps experience */}
             <div className="w-full flex flex-col px-5">
                 <div>

@@ -67,6 +67,7 @@ function SocialMedia() {
         <div className="flex gap-2">
             {socialMedia.map((social) => (
                 <a
+                    key={social.name}
                     href={social.url}
                     className="text-muted-foreground hover:text-foreground"
                 >

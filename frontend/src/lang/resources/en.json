@@ -53,6 +53,14 @@
                 "title": "Work remotely",
                 "description": "View recommendations"
             }
+        },
+        "promo": {
+            "one": {
+                "title": "Find essential city data: population, GDP, weather, and currency."
+            },
+            "two": {
+                "title": "Save your favorite destinations and plan your next trip."
+            }
         }
     },
     "city_sample_card": {

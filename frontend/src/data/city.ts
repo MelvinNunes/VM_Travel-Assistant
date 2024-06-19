@@ -14,7 +14,7 @@ export function useCities({ name }: { name?: string }) {
     queryFn: () => HttpClient.get<CitiesRes>(API_ENDPOINTS.CITIES(name), null),
   });
   return {
-    cities: data,
+    cities: data?.data ?? [],
     isLoading,
     error,
   };

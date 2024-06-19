@@ -12,7 +12,7 @@ export function CountryDetails({ city }: { city: City }) {
     if (isFetching) {
         return (
             <div>
-
+                {/* To do skeletons */}
             </div>
         )
     }
@@ -37,7 +37,7 @@ function CountryData({ country, title }: { country?: Country, title: string }) {
                         <div>{country?.region}</div>
                     </div>
                 </div>
-                <img className="rounded" src={country?.flag} alt="flag" />
+                <img className="rounded w-40 my-2" src={country?.flag} alt="flag" />
             </CardContent>
         </Card>
     )

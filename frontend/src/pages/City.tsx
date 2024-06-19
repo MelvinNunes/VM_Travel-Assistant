@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { CurrencyIcon, DollarSignIcon, MapPinIcon, TrendingUpIcon, UsersIcon } from "lucide-react"
 import { CurrentWeather } from "@/sections/city/CurrentWeather"
@@ -6,9 +5,13 @@ import { CountryDetails } from "@/sections/city/CountryDetails"
 import { useCity } from "@/data/city"
 import { useParams } from "react-router-dom"
 import { WeatherForecast } from "@/sections/city/WeatherForecast"
+import { useAtom } from "jotai"
+import { isUserAuthenticated } from "@/atoms/auth"
+import { PopulationDetails } from "@/sections/city/PopulationDetails"
+import { GdpDetails } from "@/sections/city/GdpDetails"
 
 export default function CityScreen() {
-    const [isAuthenticated,] = useState(false)
+    const [isAuthenticated,] = useAtom(isUserAuthenticated)
     const { name } = useParams()
 
     const { city, isFetching } = useCity(name);
@@ -26,44 +29,16 @@ export default function CityScreen() {
                     <section className="grid gap-4 md:grid-cols-[1fr_300px] lg:grid-cols-[1fr_400px]">
                         <div className="grid gap-4">
                             <div className="grid grid-cols-2 gap-4">
-                                {city && <CurrentWeather city={city} />}
+                                {name && <CurrentWeather cityName={name} />}
                                 {city && <CountryDetails city={city} />}
                             </div>
-                            {city && <WeatherForecast city={city} />}
+                            {name && <WeatherForecast cityName={name} />}
                         </div>
                         <div className="grid gap-4">
                             {isAuthenticated ? (
                                 <>
-                                    <Card>
-                                        <CardHeader>
-                                            <CardTitle>Population</CardTitle>
-                                        </CardHeader>
-                                        <CardContent className="grid gap-2">
-                                            <div className="flex items-center gap-2">
-                                                <UsersIcon className="h-6 w-6 text-primary" />
-                                                <div>8,728,000</div>
-                                            </div>
-                                            <div className="flex items-center gap-2">
-                                                <TrendingUpIcon className="h-6 w-6 text-primary" />
-                                                <div>+1.2% YoY</div>
-                                            </div>
-                                        </CardContent>
-                                    </Card>
-                                    <Card>
-                                        <CardHeader>
-                                            <CardTitle>GDP</CardTitle>
-                                        </CardHeader>
-                                        <CardContent className="grid gap-2">
-                                            <div className="flex items-center gap-2">
-                                                <DollarSignIcon className="h-6 w-6 text-primary" />
-                                                <div>$1.5 Trillion</div>
-                                            </div>
-                                            <div className="flex items-center gap-2">
-                                                <TrendingUpIcon className="h-6 w-6 text-primary" />
-                                                <div>+3.2% YoY</div>
-                                            </div>
-                                        </CardContent>
-                                    </Card>
+                                    {city && <PopulationDetails countryCode={city.country_code} />}
+                                    {city && <GdpDetails countryCode={city.country_code} />}
                                     <Card>
                                         <CardHeader>
                                             <CardTitle>Currency</CardTitle>

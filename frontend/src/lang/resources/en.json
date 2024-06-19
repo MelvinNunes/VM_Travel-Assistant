@@ -137,5 +137,12 @@
     },
     "forecast": {
         "title": "Weather Forecast"
-    }
+    },
+    "population": {
+        "title": "Population"
+    },
+    "gdp": {
+        "title": "GDP"
+    },
+    "no_data": "No data"
 }

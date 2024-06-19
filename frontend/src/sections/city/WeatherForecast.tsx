@@ -1,15 +1,14 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useWeatherForecast } from "@/data/weather";
-import { City } from "@/models/city";
 import { DateFormatter } from "@/utils/date-formatter";
 import { useTranslation } from "react-i18next";
 import Clouds from "@/assets/clouds.svg"
 import Cloud from "@/assets/cloud.svg"
 import Sun from "@/assets/sun.svg"
 
-export function WeatherForecast({ city }: { city: City }) {
+export function WeatherForecast({ cityName }: { cityName: string }) {
     const { t } = useTranslation()
-    const { forecast } = useWeatherForecast(city.name)
+    const { forecast } = useWeatherForecast(cityName)
 
     return (
         <Card>

@@ -1,14 +1,13 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useWeather } from "@/data/weather";
-import { City } from "@/models/city";
 import { useTranslation } from "react-i18next";
 import Clouds from "@/assets/clouds.svg"
 import Cloud from "@/assets/cloud.svg"
 import Sun from "@/assets/sun.svg"
 
-export function CurrentWeather({ city }: { city: City }) {
+export function CurrentWeather({ cityName }: { cityName: string }) {
     const { t } = useTranslation()
-    const { weather } = useWeather(city.name)
+    const { weather } = useWeather(cityName)
 
     return (
         <Card className="dark:bg-slate-900">

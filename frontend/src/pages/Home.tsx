@@ -7,9 +7,12 @@ import { Hero } from "@/sections/Hero";
 import { useTranslation } from "react-i18next";
 import HomeIcon from "@/assets/home-check.svg"
 import HeartIcon from "@/assets/heart-check.svg"
+import { useAtom } from "jotai";
+import { isUserAuthenticated } from "@/atoms/auth";
 
 export default function Home() {
     const { t } = useTranslation()
+    const [isUserAuth] = useAtom(isUserAuthenticated)
 
     return (
         <div className="flex flex-col w-full">
@@ -45,7 +48,7 @@ export default function Home() {
                 <RecommendedActivityCard title={t('home.recommendation_card.holidays.title')} description={t('home.recommendation_card.holidays.description')} backgroundImagePath="/holidays_placeholder.jpeg" />
                 <RecommendedActivityCard title={t('home.recommendation_card.work.title')} description={t('home.recommendation_card.work.description')} backgroundImagePath="/remote_work_placeholder.jpeg" />
             </div>
-            <GetStarted />
+            {!isUserAuth && <GetStarted />}
             <div className="w-full flex flex-col px-5">
                 <div>
                     {/* Asia Bests */}

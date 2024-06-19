@@ -11,6 +11,25 @@
     "login": "Login",
     "logout": "Logout",
     "register": "Register",
+    "auth_screen": {
+        "login": {
+            "title": "Login to your account",
+            "description": "Login and plan your next trip!",
+            "form": {
+                "email": {
+                    "label": "Email",
+                    "placeholder": "Enter email address"
+                },
+                "password": {
+                    "label": "Passowrd",
+                    "placeholder": "Enter a password"
+                },
+                "button": "Login",
+                "does_have_account": "New to Destinos?",
+                "register_new": "Create an account"
+            }
+        }
+    },
     "hero": {
         "title": "Discover Your Next Adventure.",
         "description": "Your ultimate travel research companion.",

@@ -1,4 +1,4 @@
-import Formatter from "../src/utils/formater";
+import Formatter from "../src/utils/formatter";
 
 describe("Test population formatter", () => {
   it("With thousand value 1000", async () => {

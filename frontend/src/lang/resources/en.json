@@ -134,5 +134,8 @@
     },
     "country": {
         "title": "Country"
+    },
+    "forecast": {
+        "title": "Weather Forecast"
     }
 }

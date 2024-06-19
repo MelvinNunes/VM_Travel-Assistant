@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { CitySample } from "@/models/city"
 import { Users } from "lucide-react"
 import { useTranslation } from "react-i18next"
-import Formatter from "@/utils/formater"
+import Formatter from "@/utils/formatter"
 import { useNavigate } from "react-router-dom"
 
 export default function CitySampleCard({ city }: { city: CitySample }) {

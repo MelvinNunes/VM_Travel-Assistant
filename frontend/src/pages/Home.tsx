@@ -45,8 +45,8 @@ export default function HomeScreen() {
                 </div>
             </div>
             <div className="flex w-full justify-center gap-3 my-6">
-                <RecommendedActivityCard title={t('home.recommendation_card.holidays.title')} description={t('home.recommendation_card.holidays.description')} backgroundImagePath="/holidays_placeholder.jpeg" />
-                <RecommendedActivityCard title={t('home.recommendation_card.work.title')} description={t('home.recommendation_card.work.description')} backgroundImagePath="/remote_work_placeholder.jpeg" />
+                <RecommendedActivityCard title={t('home.recommendation_card.holidays.title')} description={t('home.recommendation_card.holidays.description')} backgroundImagePath="/collection.png" />
+                <RecommendedActivityCard title={t('home.recommendation_card.work.title')} description={t('home.recommendation_card.work.description')} backgroundImagePath="/collection-1.png" />
             </div>
             {!isUserAuth && <GetStarted />}
             <div className="w-full flex flex-col px-5">

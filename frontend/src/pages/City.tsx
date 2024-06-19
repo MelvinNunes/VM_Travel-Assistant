@@ -1,5 +1,5 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
-import { CurrencyIcon, DollarSignIcon, MapPinIcon, TrendingUpIcon, UsersIcon } from "lucide-react"
+import { MapPinIcon, TrendingUpIcon, UsersIcon } from "lucide-react"
 import { CurrentWeather } from "@/sections/city/CurrentWeather"
 import { CountryDetails } from "@/sections/city/CountryDetails"
 import { useCity } from "@/data/city"
@@ -9,14 +9,15 @@ import { useAtom } from "jotai"
 import { isUserAuthenticated } from "@/atoms/auth"
 import { PopulationDetails } from "@/sections/city/PopulationDetails"
 import { GdpDetails } from "@/sections/city/GdpDetails"
+import { CurrencyDetails } from "@/sections/city/CurrencyDetails"
+import { useTranslation } from "react-i18next"
 
 export default function CityScreen() {
     const [isAuthenticated,] = useAtom(isUserAuthenticated)
+    const { t } = useTranslation()
     const { name } = useParams()
 
-    const { city, isFetching } = useCity(name);
-
-    console.log(isFetching)
+    const { city } = useCity(name);
 
     return (
         <div>
@@ -39,26 +40,12 @@ export default function CityScreen() {
                                 <>
                                     {city && <PopulationDetails countryCode={city.country_code} />}
                                     {city && <GdpDetails countryCode={city.country_code} />}
-                                    <Card>
-                                        <CardHeader>
-                                            <CardTitle>Currency</CardTitle>
-                                        </CardHeader>
-                                        <CardContent className="grid gap-2">
-                                            <div className="flex items-center gap-2">
-                                                <DollarSignIcon className="h-6 w-6 text-primary" />
-                                                <div>USD</div>
-                                            </div>
-                                            <div className="flex items-center gap-2">
-                                                <CurrencyIcon className="h-6 w-6 text-primary" />
-                                                <div>1 USD = 0.92 EUR</div>
-                                            </div>
-                                        </CardContent>
-                                    </Card>
+                                    {city && <CurrencyDetails countryName={city.country} />}
                                 </>
                             ) : (
                                 <Card className="relative">
                                     <CardHeader>
-                                        <CardTitle>Population</CardTitle>
+                                        <CardTitle>{t('population.title')}</CardTitle>
                                     </CardHeader>
                                     <CardContent className="grid gap-2">
                                         <div className="flex items-center gap-2 text-muted-foreground">
@@ -71,7 +58,7 @@ export default function CityScreen() {
                                         </div>
                                     </CardContent>
                                     <div className="absolute inset-0 bg-background/80 backdrop-blur-sm flex items-center justify-center">
-                                        <div className="text-muted-foreground">Login to view more details</div>
+                                        <div className="text-muted-foreground">{t('login_to_view_more')}</div>
                                     </div>
                                 </Card>
                             )}

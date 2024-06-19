@@ -5,7 +5,8 @@
         "select": "Select Language",
         "options": {
             "en": "English",
-            "pt": "Portuguese"
+            "pt": "Portuguese",
+            "fr": "French"
         }
     },
     "error": {
@@ -144,5 +145,10 @@
     "gdp": {
         "title": "GDP"
     },
-    "no_data": "No data"
+    "currency": {
+        "title": "Currency",
+        "base": "Base"
+    },
+    "no_data": "No data",
+    "login_to_view_more": "Login to view more details"
 }

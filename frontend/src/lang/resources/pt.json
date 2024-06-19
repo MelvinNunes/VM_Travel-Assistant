@@ -5,7 +5,8 @@
         "select": "Selecionar Idioma",
         "options": {
             "en": "Inglês",
-            "pt": "Português"
+            "pt": "Português",
+            "fr": "Francês"
         }
     },
     "error": {
@@ -144,5 +145,10 @@
     "gdp": {
         "title": "PIB"
     },
-    "no_data": "Sem dados"
+    "currency": {
+        "title": "Moeda",
+        "base": "Base"
+    },
+    "no_data": "Sem dados",
+    "login_to_view_more": "Entre para ver mais detalhes"
 }

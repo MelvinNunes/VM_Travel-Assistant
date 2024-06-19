@@ -27,6 +27,11 @@ export default function LanguageSelector() {
                             <span>{t('lang.options.pt')}</span>
                         </div>
                     </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => i18n.changeLanguage("fr")}>
+                        <div className="flex items-center justify-between">
+                            <span>{t('lang.options.fr')}</span>
+                        </div>
+                    </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>
         </div>

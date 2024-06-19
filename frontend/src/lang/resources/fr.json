@@ -1,0 +1,154 @@
+{
+    "title": "Destinations",
+    "lang": {
+        "label": "Langue",
+        "select": "Sélectionner la Langue",
+        "options": {
+            "en": "Anglais",
+            "pt": "Portugais",
+            "fr": "Français"
+        }
+    },
+    "error": {
+        "title": "Oups ! Vos plans de destination sont hors de la carte !",
+        "description": "Il semble que la page que vous cherchez a disparu dans l'abîme. Ne vous inquiétez pas, nous allons vous aider à retrouver votre chemin.",
+        "home": "Renvoyez-moi à la page d'accueil"
+    },
+    "login": "Se connecter",
+    "logout": "Se déconnecter",
+    "register": "S'inscrire",
+    "auth_screen": {
+        "login": {
+            "title": "Connectez-vous à votre compte",
+            "description": "Connectez-vous et planifiez votre prochain voyage !",
+            "form": {
+                "email": {
+                    "label": "Email",
+                    "placeholder": "Entrez votre adresse e-mail",
+                    "invalid": "Adresse e-mail invalide",
+                    "required": "L'email est obligatoire"
+                },
+                "password": {
+                    "label": "Mot de passe",
+                    "placeholder": "Entrez un mot de passe",
+                    "required": "Le mot de passe est obligatoire"
+                },
+                "button": "Se connecter",
+                "does_have_account": "Nouveau sur Destinations ?",
+                "register_new": "Créer un compte"
+            }
+        },
+        "register": {
+            "title": "Créez votre compte gratuit",
+            "description": "Créez votre compte gratuit pour rejoindre plus de 300 000 voyageurs !",
+            "form": {
+                "name": {
+                    "label": "Nom",
+                    "placeholder": "ex : Melvin Nunes",
+                    "required": "Le nom est obligatoire"
+                },
+                "email": {
+                    "label": "Email",
+                    "placeholder": "Entrez votre adresse e-mail",
+                    "invalid": "Adresse e-mail invalide",
+                    "required": "L'email est obligatoire"
+                },
+                "password": {
+                    "label": "Mot de passe",
+                    "placeholder": "Entrez un mot de passe",
+                    "required": "Le mot de passe est obligatoire",
+                    "min": "Le mot de passe doit contenir plus de 3 mots"
+                },
+                "button": "Créer un Compte",
+                "already_have": "Vous avez déjà un compte ?",
+                "login_to": "Se connecter"
+            }
+        }
+    },
+    "hero": {
+        "title": "Découvrez Votre Prochaine Aventure.",
+        "description": "Votre compagnon ultime pour la recherche de voyages.",
+        "search": {
+            "placeholder": "Rechercher une ville"
+        }
+    },
+    "search_page": {
+        "title": "Rechercher des Villes",
+        "recommendation_title": "Quelques villes qui pourraient vous plaire",
+        "results": "Résultats de votre recherche"
+    },
+    "footer": {
+        "description": "Destinations est votre compagnon idéal pour explorer le monde. Créé par des passionnés de voyages, notre objectif est de simplifier la planification de vos aventures en fournissant des informations essentielles sur les villes du monde entier.",
+        "find_us": "Trouvez-nous",
+        "copyright": "Droits d'auteur © 2024 Destinations - Tous droits réservés.",
+        "privacy": "Politique de Confidentialité",
+        "usage": "Conditions d'Utilisation",
+        "cookies": "Préférences de Cookies"
+    },
+    "home": {
+        "section": {
+            "best_africa": {
+                "title": "Meilleures villes africaines",
+                "description": "L'Afrique abrite des villes magnifiques, avec des cultures uniques, des paysages époustouflants et des destinations balnéaires."
+            },
+            "best_europe": {
+                "title": "Meilleures villes européennes",
+                "description": "L'Europe est un trésor de villes captivantes, chacune offrant un mélange unique d'histoire, de culture et d'attractions modernes."
+            },
+            "best_asia": {
+                "title": "Meilleures villes d'Asie",
+                "description": "L'Asie est un continent de contrastes, où les anciennes traditions se mêlent harmonieusement aux innovations modernes."
+            }
+        },
+        "recommendation_card": {
+            "holidays": {
+                "title": "Vacances",
+                "description": "Voir les recommandations"
+            },
+            "work": {
+                "title": "Travailler à distance",
+                "description": "Voir les recommandations"
+            }
+        },
+        "promo": {
+            "one": {
+                "title": "Trouvez des données essentielles sur la ville : population, PIB, climat et devise."
+            },
+            "two": {
+                "title": "Enregistrez vos destinations préférées et planifiez votre prochain voyage."
+            }
+        },
+        "get_started": {
+            "title": "Déverrouillez le Monde avec le Guide de Destinations.",
+            "description": "Planifiez votre voyage de rêve en toute confiance.",
+            "button_label": "Commencer"
+        }
+    },
+    "city_sample_card": {
+        "details_button_label": "Détails"
+    },
+    "current_weather": {
+        "title": "Météo Actuelle",
+        "feels": "Ressenti",
+        "wind": "Vent :",
+        "humidity": "Humidité :"
+    },
+    "country": {
+        "title": "Pays"
+    },
+    "forecast": {
+        "title": "Prévision Météo"
+    },
+    "population": {
+        "title": "Population"
+    },
+    "gdp": {
+        "title": "PIB"
+    },
+    "currency": {
+        "title": "Devise",
+        "base": "Base"
+    },
+    "no_data": "Aucune donnée",
+    "login_to_view_more": "Connectez-vous pour voir plus de détails"
+}

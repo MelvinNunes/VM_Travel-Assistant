@@ -1,6 +1,7 @@
 package com.vm.travel.dto.request;
 
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
 public record RegisterDTO(
@@ -9,6 +10,7 @@ public record RegisterDTO(
         String email,
         @NotBlank
         String name,
+        @Min(3)
         @NotBlank
         String password
 ) {

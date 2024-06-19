@@ -36,7 +36,7 @@ public class SecurityFilter extends OncePerRequestFilter {
             "/api/v1/cities/{cityName:.+}/weather/current",
             "/api/v1/cities/{cityName:.+}/weather/forecast",
             "/api/v1/auth/register",
-            "/api/v1/auth/login"it a
+            "/api/v1/auth/login"
     ));
     private final AntPathMatcher pathMatcher = new AntPathMatcher();
 

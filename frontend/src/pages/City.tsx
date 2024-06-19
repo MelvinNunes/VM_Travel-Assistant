@@ -17,9 +17,9 @@ export default function CityScreen() {
 
     return (
         <div>
-            <div className="flex items-center gap-2 px-4 md:px-12 mt-7">
+            <div className="flex items-center gap-2 px-4 md:px-12 mt-7 dark:pb-8">
                 <MapPinIcon className="h-6 w-6 text-primary" />
-                <h1 className="text-xl font-semibold">{city?.name}</h1>
+                <h1 className="text-xl dark:text-slate-400 font-semibold">{city?.name}</h1>
             </div>
             <div className="grid min-h-screen w-full bg-background text-foreground">
                 <main className="container grid gap-4 px-4 py-8 md:px-6 md:py-10">

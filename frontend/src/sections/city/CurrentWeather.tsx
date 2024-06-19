@@ -11,14 +11,14 @@ export function CurrentWeather({ city }: { city: City }) {
     const { weather } = useWeather(city.name)
 
     return (
-        <Card>
+        <Card className="dark:bg-slate-900">
             <CardHeader>
                 <CardTitle>{t('current_weather.title')}</CardTitle>
             </CardHeader>
             <CardContent className="flex items-center justify-center gap-4">
                 <div className="grid md:flex w-full items-center justify-center h-full gap-4 md:grid-cols-2 md:mt-10">
                     <div className="flex flex-col items-center gap-2">
-                        {weather?.temperature && <img src={weather.temperature > 30 ? Sun : weather.temperature > 20 ? Cloud : Clouds} alt="temperature" />}
+                        {weather?.temperature && <img className="h-20 w-20" src={weather.temperature > 30 ? Sun : weather.temperature > 20 ? Cloud : Clouds} alt="temperature" />}
                         <div>
                             <div className="text-4xl font-bold">{weather?.temperature}°C</div>
                             <div className="text-sm text-muted-foreground">{weather?.weather[0].description}</div>

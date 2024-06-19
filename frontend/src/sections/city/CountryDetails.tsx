@@ -22,7 +22,7 @@ export function CountryDetails({ city }: { city: City }) {
 
 function CountryData({ country, title }: { country?: Country, title: string }) {
     return (
-        <Card>
+        <Card className="dark:bg-slate-900">
             <CardHeader>
                 <CardTitle>{title}</CardTitle>
             </CardHeader>

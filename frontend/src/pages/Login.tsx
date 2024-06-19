@@ -33,11 +33,11 @@ export default function Login() {
     return (
         <form onSubmit={formik.handleSubmit} className="flex flex-col gap-4 px-10 md:px-20 lg:px-96 my-10">
             <div className="flex flex-col mb-5">
-                <h1 className="font-semibold text-lg">{t('auth_screen.login.title')}</h1>
-                <p className="text-sm">{t('auth_screen.login.description')}</p>
+                <h1 className="font-semibold text-lg dark:text-slate-400">{t('auth_screen.login.title')}</h1>
+                <p className="text-sm dark:text-slate-500">{t('auth_screen.login.description')}</p>
             </div>
             <div className="flex flex-col gap-2">
-                <Label>{t('auth_screen.login.form.email.label')}</Label>
+                <Label className="dark:text-slate-400">{t('auth_screen.login.form.email.label')}</Label>
                 <Input type="email" name="email" required onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.email}
@@ -46,7 +46,7 @@ export default function Login() {
                 {formik.errors.email && formik.touched.email && <span className="text-sm text-red-500">{formik.errors.email}</span>}
             </div>
             <div className="flex flex-col gap-2">
-                <Label>{t('auth_screen.login.form.password.label')}</Label>
+                <Label className="dark:text-slate-400">{t('auth_screen.login.form.password.label')}</Label>
                 <Input type="password" name="password" required onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.password}
@@ -55,7 +55,7 @@ export default function Login() {
                 {formik.errors.password && formik.touched.password && <span className="text-sm text-red-500">{formik.errors.password}</span>}
             </div>
             <Button disabled={isPending} type="submit">{t('auth_screen.login.form.button')} {isPending && <ReloadIcon className="ml-2 animate-spin" />}</Button>
-            <p className="text-sm">{t('auth_screen.login.form.does_have_account')} <a href="/register" className="text-primary">{t('auth_screen.login.form.register_new')}</a></p>
+            <p className="dark:text-slate-500 text-sm">{t('auth_screen.login.form.does_have_account')} <a href="/register" className="text-primary">{t('auth_screen.login.form.register_new')}</a></p>
         </form>
     )
 }

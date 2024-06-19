@@ -9,7 +9,7 @@ type CitiesRes = {
 };
 
 export function useCities({ name }: { name?: string }) {
-  const { isLoading, error, data, isPending } = useQuery({
+  const { isLoading, error, data, isPending, isFetching } = useQuery({
     queryKey: ["getAllCities"],
     queryFn: () => HttpClient.get<CitiesRes>(API_ENDPOINTS.CITIES(name), null),
   });
@@ -17,6 +17,7 @@ export function useCities({ name }: { name?: string }) {
     cities: data?.data ?? [],
     isLoading,
     isPending,
+    isFetching,
     error,
   };
 }

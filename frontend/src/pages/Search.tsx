@@ -12,7 +12,8 @@ export default function Search() {
     const { t } = useTranslation()
     const queryClient = useQueryClient()
     const [query, setQuery] = useState<string>("")
-    const { cities, isPending } = useCities({ name: query })
+    const { cities, isFetching } = useCities({ name: query })
+
 
     useEffect(() => {
         queryClient.invalidateQueries({ queryKey: ["getAllCities"] })
@@ -39,14 +40,14 @@ export default function Search() {
             <Separator />
 
             <h1 className="text-slate-400 font-medium my-3">{query ? t('search_page.results') : t('search_page.recommendation_title')}</h1>
-            {isPending ? <SkeletonForCities /> : <CitiesYouMightLike cities={cities} />}
+            {isFetching ? <SkeletonForCities /> : <CitiesYouMightLike cities={cities} />}
         </div>
     )
 }
 
 function CitiesYouMightLike({ cities }: { cities: City[] }) {
     return (
-        <div className="flex flex-col w-full justify-center items-center gap-3  px-10">
+        <div className="flex flex-col w-full justify-center items-center gap-3  px-10 mb-10">
             {cities.map((city) => (
                 <CityRecommendedCard city={city} key={city.id} />
             ))}

@@ -35,11 +35,11 @@ export default function Register() {
     return (
         <form onSubmit={formik.handleSubmit} className="flex flex-col gap-4 px-10 md:px-20 lg:px-96 my-10">
             <div className="flex flex-col mb-5">
-                <h1 className="font-semibold text-lg">{t('auth_screen.register.title')}</h1>
-                <p className="text-sm">{t('auth_screen.register.description')}</p>
+                <h1 className="font-semibold text-lg dark:text-slate-400">{t('auth_screen.register.title')}</h1>
+                <p className="text-sm dark:text-slate-500">{t('auth_screen.register.description')}</p>
             </div>
             <div className="flex flex-col gap-2">
-                <Label>{t('auth_screen.register.form.name.label')}</Label>
+                <Label className="dark:text-slate-400">{t('auth_screen.register.form.name.label')}</Label>
                 <Input type="text" name="name" required onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.name}
@@ -48,7 +48,7 @@ export default function Register() {
                 {formik.errors.name && formik.touched.name && <span className="text-sm text-red-500">{formik.errors.name}</span>}
             </div>
             <div className="flex flex-col gap-2">
-                <Label>{t('auth_screen.register.form.email.label')}</Label>
+                <Label className="dark:text-slate-400">{t('auth_screen.register.form.email.label')}</Label>
                 <Input type="email" name="email" required onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.email}
@@ -57,7 +57,7 @@ export default function Register() {
                 {formik.errors.email && formik.touched.email && <span className="text-sm text-red-500">{formik.errors.email}</span>}
             </div>
             <div className="flex flex-col gap-2">
-                <Label>{t('auth_screen.register.form.password.label')}</Label>
+                <Label className="dark:text-slate-400">{t('auth_screen.register.form.password.label')}</Label>
                 <Input type="password" name="password" required onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.password}
@@ -66,7 +66,7 @@ export default function Register() {
                 {formik.errors.password && formik.touched.password && <span className="text-sm text-red-500">{formik.errors.password}</span>}
             </div>
             <Button disabled={isPending} type="submit">{t('auth_screen.register.form.button')} {isPending && <ReloadIcon className="ml-2 animate-spin" />}</Button>
-            <p className="text-sm">{t('auth_screen.register.form.already_have')} <a href="/login" className="text-primary">{t('auth_screen.register.form.login_to')}</a> </p>
+            <p className="text-sm dark:text-slate-500">{t('auth_screen.register.form.already_have')} <a href="/login" className="text-primary">{t('auth_screen.register.form.login_to')}</a> </p>
         </form>
     )
 }

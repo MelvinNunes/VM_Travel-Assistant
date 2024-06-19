@@ -1,13 +1,148 @@
 {
     "title": "Destinos",
     "lang": {
-        "label": "Língua",
-        "select": "Seleccione a língua",
+        "label": "Idioma",
+        "select": "Selecionar Idioma",
         "options": {
             "en": "Inglês",
             "pt": "Português"
         }
     },
+    "error": {
+        "title": "Ops! Seus planos de destino saíram do mapa!",
+        "description": "Parece que a página que você está procurando desapareceu no abismo. Não se preocupe, vamos ajudá-lo a encontrar o caminho de volta.",
+        "home": "Leve-me de volta para casa"
+    },
     "login": "Entrar",
-    "logout": "Sair"
+    "logout": "Sair",
+    "register": "Registrar",
+    "auth_screen": {
+        "login": {
+            "title": "Faça login na sua conta",
+            "description": "Faça login e planeje sua próxima viagem!",
+            "form": {
+                "email": {
+                    "label": "Email",
+                    "placeholder": "Digite o endereço de email",
+                    "invalid": "Endereço de email inválido",
+                    "required": "O email é obrigatório"
+                },
+                "password": {
+                    "label": "Senha",
+                    "placeholder": "Digite uma senha",
+                    "required": "A senha é obrigatória"
+                },
+                "button": "Entrar",
+                "does_have_account": "Novo no Destinos?",
+                "register_new": "Criar uma conta"
+            }
+        },
+        "register": {
+            "title": "Crie sua conta gratuita",
+            "description": "Crie sua conta gratuita para se juntar a mais de 300.000 viajantes!",
+            "form": {
+                "name": {
+                    "label": "Nome",
+                    "placeholder": "ex: Melvin Nunes",
+                    "required": "O nome é obrigatório"
+                },
+                "email": {
+                    "label": "Email",
+                    "placeholder": "Digite o endereço de email",
+                    "invalid": "Endereço de email inválido",
+                    "required": "O email é obrigatório"
+                },
+                "password": {
+                    "label": "Senha",
+                    "placeholder": "Digite uma senha",
+                    "required": "A senha é obrigatória",
+                    "min": "A senha precisa ter mais de 3 palavras"
+                },
+                "button": "Criar Conta",
+                "already_have": "Já tem uma conta?",
+                "login_to": "Entrar"
+            }
+        }
+    },
+    "hero": {
+        "title": "Descubra Sua Próxima Aventura.",
+        "description": "Seu companheiro definitivo de pesquisa de viagens.",
+        "search": {
+            "placeholder": "Pesquisar por uma cidade"
+        }
+    },
+    "search_page": {
+        "title": "Pesquisar Cidades",
+        "recommendation_title": "Algumas cidades que você pode gostar",
+        "results": "Resultados da sua pesquisa"
+    },
+    "footer": {
+        "description": "Destinos é seu companheiro ideal para explorar o mundo. Criado por amantes de viagens, nosso objetivo é simplificar o planejamento de suas aventuras oferecendo informações essenciais sobre cidades ao redor do mundo.",
+        "find_us": "Encontre-nos",
+        "copyright": "Copyright © 2024 Destinos - Todos os direitos reservados.",
+        "privacy": "Políticas de Privacidade",
+        "usage": "Termos de uso",
+        "cookies": "Preferências de Cookies"
+    },
+    "home": {
+        "section": {
+            "best_africa": {
+                "title": "Melhores cidades africanas",
+                "description": "A África tem as cidades mais bonitas, com culturas únicas, paisagens deslumbrantes e destinos de praia"
+            },
+            "best_europe": {
+                "title": "Melhores cidades europeias",
+                "description": "A Europa é um tesouro de cidades cativantes, cada uma oferecendo uma mistura única de história, cultura e atrações modernas"
+            },
+            "best_asia": {
+                "title": "Melhores cidades da Ásia",
+                "description": "A Ásia é um continente de contrastes, onde antigas tradições se misturam harmoniosamente com inovações modernas."
+            }
+        },
+        "recommendation_card": {
+            "holidays": {
+                "title": "Férias",
+                "description": "Ver recomendações"
+            },
+            "work": {
+                "title": "Trabalhar remotamente",
+                "description": "Ver recomendações"
+            }
+        },
+        "promo": {
+            "one": {
+                "title": "Encontre dados essenciais da cidade: população, PIB, clima e moeda."
+            },
+            "two": {
+                "title": "Salve seus destinos favoritos e planeje sua próxima viagem."
+            }
+        },
+        "get_started": {
+            "title": "Desbloqueie o Mundo com o Guia da Destinos.",
+            "description": "Planeje sua viagem dos sonhos com confiança.",
+            "button_label": "Começar"
+        }
+    },
+    "city_sample_card": {
+        "details_button_label": "Detalhes"
+    },
+    "current_weather": {
+        "title": "Clima Atual",
+        "feels": "Sensação térmica",
+        "wind": "Vento:",
+        "humidity": "Umidade:"
+    },
+    "country": {
+        "title": "País"
+    },
+    "forecast": {
+        "title": "Previsão do Tempo"
+    },
+    "population": {
+        "title": "População"
+    },
+    "gdp": {
+        "title": "PIB"
+    },
+    "no_data": "Sem dados"
 }

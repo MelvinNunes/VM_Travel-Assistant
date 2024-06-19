@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { HttpClient } from "./client/http-client";
 import { API_ENDPOINTS } from "./client/endpoints";
@@ -6,6 +6,7 @@ import { setAuthToken } from "./client/token.utils";
 import { toast } from "@/components/ui/use-toast";
 import { useAtom } from "jotai";
 import { isUserAuthenticated } from "@/atoms/auth";
+import { User } from "@/models/user";
 
 type LoginResponse = {
   message: string;
@@ -85,5 +86,23 @@ export function useRegister() {
     isSuccess,
     isError,
     register: mutate,
+  };
+}
+
+type AccountRes = {
+  data: User;
+  message: string;
+};
+
+export function useGetUser() {
+  const { isLoading, isFetching, error, data } = useQuery({
+    queryKey: ["getMyUserDetails"],
+    queryFn: () => HttpClient.get<AccountRes>(API_ENDPOINTS.ACCOUNT, null),
+  });
+  return {
+    account: data?.data,
+    isLoading,
+    isFetching,
+    error,
   };
 }

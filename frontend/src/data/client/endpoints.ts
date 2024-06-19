@@ -1,6 +1,7 @@
 export const API_ENDPOINTS = {
   LOGIN: "/auth/login",
   REGISTER: "/auth/register",
+  ACCOUNT: "/accounts/me",
   CITIES: (name?: string) => (name ? `/cities?name=${name}` : "/cities"),
   CITY: (cityName?: string) => `/cities/${cityName}`,
   CURRENT_WEATHER: (cityName: string) => `/cities/${cityName}/weather/current`,

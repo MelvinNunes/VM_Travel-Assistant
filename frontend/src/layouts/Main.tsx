@@ -22,12 +22,24 @@ import Footer from "@/sections/Footer"
 import { Toaster } from "@/components/ui/toaster"
 import { useAtom } from "jotai"
 import { isUserAuthenticated } from "@/atoms/auth"
+import { useGetUser } from "@/data/auth"
+import { removeAuthToken } from "@/data/client/token.utils"
+import { useEffect } from "react"
 
 
 export function Layout() {
     const { t } = useTranslation()
     const navigate = useNavigate()
-    const [isLoggedIn] = useAtom(isUserAuthenticated)
+    const [isLoggedIn, setIsLoggenIn] = useAtom(isUserAuthenticated)
+
+    const { account, isFetching } = useGetUser()
+
+    useEffect(() => {
+        if (account && !isLoggedIn) {
+            setIsLoggenIn(true)
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isFetching])
 
     return (
         <div className="flex min-h-screen w-full flex-col">
@@ -48,9 +60,13 @@ export function Layout() {
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                            <DropdownMenuLabel>Melvin Nunes</DropdownMenuLabel>
+                            <DropdownMenuLabel>{account?.name}</DropdownMenuLabel>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem onClick={() => { }}>{t('logout')}</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => {
+                                removeAuthToken()
+                                setIsLoggenIn(false)
+                            }}>{t('logout')}
+                            </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu> : <Button onClick={() => navigate("login")}>{t('login')}</Button>}
 

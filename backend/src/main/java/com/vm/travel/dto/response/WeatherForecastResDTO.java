@@ -2,8 +2,8 @@ package com.vm.travel.dto.response;
 
 import java.util.List;
 
-public record CountryResDTO(
+public record WeatherForecastResDTO(
         String message,
-        CountryDTO data
+        List<WeatherDTO> data
 ) {
 }

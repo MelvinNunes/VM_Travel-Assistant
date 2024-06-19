@@ -3,6 +3,7 @@ package com.vm.travel.controllers;
 import com.vm.travel.domain.services.CountryService;
 import com.vm.travel.dto.ResponseAPI;
 import com.vm.travel.dto.filters.CountryFilters;
+import com.vm.travel.dto.response.*;
 import com.vm.travel.infrastructure.config.ratelimit.RateLimitProtection;
 import com.vm.travel.infrastructure.exceptions.InternalServerErrorException;
 import com.vm.travel.infrastructure.exceptions.NotFoundException;
@@ -30,10 +31,10 @@ public class CountriesController {
     @GetMapping
     @Operation(summary = "Fetch all countries based on request params")
     @RateLimitProtection
-    public ResponseEntity<ResponseAPI> getAllCountries(
+    public ResponseEntity<CountriesResDTO> getAllCountries(
             @ParameterObject CountryFilters countryFilters
     ) throws InternalServerErrorException, NotFoundException {
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseAPI(
+        return ResponseEntity.status(HttpStatus.OK).body(new CountriesResDTO(
                 messageSource.getMessage("countries.success", null, LocaleContextHolder.getLocale()),
                 countryService.getAllCountries(countryFilters)
         ));
@@ -42,10 +43,10 @@ public class CountriesController {
     @GetMapping("/{countryCode}/population")
     @Operation(summary = "Get country population data based on country's code")
     @RateLimitProtection
-    public ResponseEntity<ResponseAPI> getCountryPopulationData(
+    public ResponseEntity<CountryPopulationResDTO> getCountryPopulationData(
             @PathVariable(name = "countryCode") String countryCode
     ) throws InternalServerErrorException, NotFoundException {
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseAPI(
+        return ResponseEntity.status(HttpStatus.OK).body(new CountryPopulationResDTO(
                 messageSource.getMessage("countries.pupulation.success", null, LocaleContextHolder.getLocale()),
                 countryService.getCountryPopulationDataByCountryCode(countryCode)
         ));
@@ -54,10 +55,10 @@ public class CountriesController {
     @GetMapping("/{countryCode}/gdp")
     @Operation(summary = "Get country gdp data based on country's code")
     @RateLimitProtection
-    public ResponseEntity<ResponseAPI> getCountryGdpData(
+    public ResponseEntity<CountryGdpResDTO> getCountryGdpData(
             @PathVariable(name = "countryCode") String countryCode
     ) throws InternalServerErrorException, NotFoundException {
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseAPI(
+        return ResponseEntity.status(HttpStatus.OK).body(new CountryGdpResDTO(
                 messageSource.getMessage("countries.gdp.success", null, LocaleContextHolder.getLocale()),
                 countryService.getCountryGdpDataByCountryCode(countryCode)
         ));
@@ -66,10 +67,10 @@ public class CountriesController {
     @GetMapping("/{countryName}/exchange-rates")
     @Operation(summary = "Get specific country exchange rates using the country name")
     @RateLimitProtection
-    public ResponseEntity<ResponseAPI> getCityExchangeRates(
+    public ResponseEntity<CountryExchangeRatesResDTO> getCityExchangeRates(
             @PathVariable(name = "countryName") String countryName
     ) throws InternalServerErrorException, NotFoundException {
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseAPI(
+        return ResponseEntity.status(HttpStatus.OK).body(new CountryExchangeRatesResDTO(
                 messageSource.getMessage("countries.exchanges.success", null, LocaleContextHolder.getLocale()),
                 countryService.getCountryExchangeRatesByCountryName(countryName)
         ));
@@ -78,10 +79,10 @@ public class CountriesController {
     @GetMapping("/{countryName}")
     @Operation(summary = "Get country details based on country's name")
     @RateLimitProtection
-    public ResponseEntity<ResponseAPI> getAllCountries(
+    public ResponseEntity<CountryResDTO> getAllCountries(
             @PathVariable(name = "countryName") String countryName
     ) throws InternalServerErrorException, NotFoundException {
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseAPI(
+        return ResponseEntity.status(HttpStatus.OK).body(new CountryResDTO(
                 messageSource.getMessage("countries.one", null, LocaleContextHolder.getLocale()),
                 countryService.getCountryDetailsByCountryName(countryName)
         ));

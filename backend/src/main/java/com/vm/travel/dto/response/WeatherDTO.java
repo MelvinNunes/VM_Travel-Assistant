@@ -2,7 +2,7 @@ package com.vm.travel.dto.response;
 
 import com.vm.travel.integrations.openweather.dto.WeatherData;
 
-public record WeatherResDTO(
+public record WeatherDTO(
         WeatherData.Weather[] weather,
         double temperature,
         double temperatureMin,

@@ -2,6 +2,7 @@ package com.vm.travel.controllers;
 
 import com.vm.travel.domain.services.UserService;
 import com.vm.travel.dto.ResponseAPI;
+import com.vm.travel.dto.response.MyUserResDTO;
 import com.vm.travel.infrastructure.config.ratelimit.RateLimitProtection;
 import com.vm.travel.infrastructure.exceptions.NotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,9 +28,9 @@ public class AccountsController {
     @Operation(summary = "Get my account - online user account")
     @GetMapping("/me")
     @RateLimitProtection
-    public ResponseEntity<ResponseAPI> geMyProfile() throws NotFoundException {
+    public ResponseEntity<MyUserResDTO> geMyProfile() throws NotFoundException {
         var user = userService.onlineUser();
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseAPI(
+        return ResponseEntity.status(HttpStatus.OK).body(new MyUserResDTO(
                 messageSource.getMessage("users.me", null, LocaleContextHolder.getLocale()),
                 user
         ));

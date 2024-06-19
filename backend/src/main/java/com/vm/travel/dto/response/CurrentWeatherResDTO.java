@@ -1,7 +1,7 @@
 package com.vm.travel.dto.response;
 
-public record CityResDTO(
+public record CurrentWeatherResDTO(
         String message,
-        CityDTO data
+        WeatherDTO data
 ) {
 }

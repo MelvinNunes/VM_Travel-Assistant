@@ -1,8 +1,8 @@
 package com.vm.travel.domain.services;
 
 import com.vm.travel.dto.filters.CityFilters;
-import com.vm.travel.dto.response.CityResDTO;
-import com.vm.travel.dto.response.WeatherResDTO;
+import com.vm.travel.dto.response.CityDTO;
+import com.vm.travel.dto.response.WeatherDTO;
 import com.vm.travel.infrastructure.exceptions.InternalServerErrorException;
 import com.vm.travel.infrastructure.exceptions.NotFoundException;
 import com.vm.travel.infrastructure.exceptions.UnprocessableEntityException;
@@ -22,7 +22,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,13 +36,13 @@ public class CityService {
      * Retrieves a list of all cities based on the provided filters from a cache or external API.
      *
      * @param cityFilters the filters to apply when retrieving the list of cities.
-     * @return a list of {@link CityResDTO} objects containing the details of the cities.
+     * @return a list of {@link CityDTO} objects containing the details of the cities.
      * @throws InternalServerErrorException if there is an issue retrieving the city details.
      */
     @Cacheable(value = "cities", key = "#cityFilters.name != null ? #cityFilters.name : #cityFilters.countryCode != null ? 'country:' + #cityFilters.countryCode : 'default'")
-    public List<CityResDTO> getAllCities(CityFilters cityFilters) throws InternalServerErrorException {
+    public List<CityDTO> getAllCities(CityFilters cityFilters) throws InternalServerErrorException {
         CompletableFuture<GeoDbRes> citiesFuture;
-        List<CityResDTO> cities;
+        List<CityDTO> cities;
         if (cityFilters.getName() != null) {
             citiesFuture = geoDbClient.getCitiesByQuery(cityFilters.getName());
         } else if (cityFilters.getCountryCode() != null) {
@@ -64,14 +63,14 @@ public class CityService {
      * Retrieves detailed information about a specific city by its name from a cache or external API.
      *
      * @param cityName the name of the city to retrieve details for.
-     * @return a {@link CityResDTO} object containing the details of the first city.
+     * @return a {@link CityDTO} object containing the details of the first city.
      * @throws InternalServerErrorException if there is an issue retrieving the city details.
      * @throws NotFoundException            if no city details are found for the specified name.
      */
     @Cacheable(value = "cityDetails", key = "#cityName")
-    public CityResDTO getSpecificCityDetailsByCityName(String cityName) throws InternalServerErrorException, NotFoundException {
+    public CityDTO getSpecificCityDetailsByCityName(String cityName) throws InternalServerErrorException, NotFoundException {
         CompletableFuture<GeoDbRes> citiesFuture = geoDbClient.getCitiesByQuery(cityName);
-        List<CityResDTO> cities;
+        List<CityDTO> cities;
         try {
             cities = this.getCitiesFromFuture(citiesFuture);
         } catch (Exception e) {
@@ -93,7 +92,7 @@ public class CityService {
      * @throws InternalServerErrorException if there is an issue retrieving the weather details.
      */
     @Cacheable(value = "currentCityWeatherDetails", key = "#cityName + '_' + #lang")
-    public WeatherResDTO getCityCurrentWeatherByCityName(String cityName, String lang) throws InternalServerErrorException, UnprocessableEntityException {
+    public WeatherDTO getCityCurrentWeatherByCityName(String cityName, String lang) throws InternalServerErrorException, UnprocessableEntityException {
         CompletableFuture<WeatherData> weatherFuture = weatherClient.getCurrentCityWeatherByCityName(cityName, lang);
         WeatherData data;
         try {
@@ -117,7 +116,7 @@ public class CityService {
      * @throws InternalServerErrorException if there is an issue retrieving the weather forecast details.
      */
     @Cacheable(value = "currentCityWeatherForecastDetails", key = "#cityName + '_' + #lang")
-    public List<WeatherResDTO> getCityWeatherForecastByCityName(String cityName, String lang) throws InternalServerErrorException, UnprocessableEntityException {
+    public List<WeatherDTO> getCityWeatherForecastByCityName(String cityName, String lang) throws InternalServerErrorException, UnprocessableEntityException {
         CompletableFuture<WeatherForecastRes> weatherFuture = weatherClient.getCityWeatherForecastForNextFiveDays(cityName, lang);
         WeatherForecastRes response;
         try {
@@ -132,9 +131,9 @@ public class CityService {
         return response.list().stream().map(this::buildWeatherResDTO).collect(Collectors.toList());
     }
 
-    private List<CityResDTO> getCitiesFromFuture(CompletableFuture<GeoDbRes> completableFuture) throws InternalServerErrorException {
+    private List<CityDTO> getCitiesFromFuture(CompletableFuture<GeoDbRes> completableFuture) throws InternalServerErrorException {
         try {
-            return completableFuture.get().data().stream().map(city -> new CityResDTO(
+            return completableFuture.get().data().stream().map(city -> new CityDTO(
                     city.id(),
                     city.type(),
                     city.city(),
@@ -154,8 +153,8 @@ public class CityService {
         }
     }
 
-    private WeatherResDTO buildWeatherResDTO(WeatherData weatherData) {
-        return new WeatherResDTO(
+    private WeatherDTO buildWeatherResDTO(WeatherData weatherData) {
+        return new WeatherDTO(
                 weatherData.weather(),
                 WeatherConversor.convertFromKelvinToCelsius(weatherData.main().temp()),
                 WeatherConversor.convertFromKelvinToCelsius(weatherData.main().temp_min()),

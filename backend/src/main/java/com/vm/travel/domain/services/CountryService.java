@@ -1,8 +1,7 @@
 package com.vm.travel.domain.services;
 
 import com.vm.travel.dto.filters.CountryFilters;
-import com.vm.travel.dto.response.CityResDTO;
-import com.vm.travel.dto.response.CountryResDTO;
+import com.vm.travel.dto.response.CountryDTO;
 import com.vm.travel.infrastructure.exceptions.InternalServerErrorException;
 import com.vm.travel.infrastructure.exceptions.NotFoundException;
 import com.vm.travel.infrastructure.exceptions.UnprocessableEntityException;
@@ -18,7 +17,6 @@ import com.vm.travel.integrations.worldbank.dto.GDPResponse;
 import com.vm.travel.integrations.worldbank.dto.PopulationData;
 import com.vm.travel.integrations.worldbank.dto.PopulationResponse;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.ast.Not;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
@@ -27,7 +25,6 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
@@ -45,11 +42,11 @@ public class CountryService {
      * Retrieves a list of countries based on the provided filters from a cache or external API.
      *
      * @param countryFilters the filters to apply when retrieving the list of countries.
-     * @return a list of {@link CountryResDTO} objects containing the details of the countries.
+     * @return a list of {@link CountryDTO} objects containing the details of the countries.
      * @throws InternalServerErrorException if there is an issue retrieving the country list.
      */
     @Cacheable(value = "countries", key = "#countryFilters.region == null ? 'default' : #countryFilters.region")
-    public List<CountryResDTO> getAllCountries(CountryFilters countryFilters) throws InternalServerErrorException, NotFoundException {
+    public List<CountryDTO> getAllCountries(CountryFilters countryFilters) throws InternalServerErrorException, NotFoundException {
         CompletableFuture<RestCountriesResponse> restCountriesResponseCompletableFuture;
         RestCountriesResponse data;
         if (countryFilters.getRegion() != null) {
@@ -73,12 +70,12 @@ public class CountryService {
      * Retrieves detailed information about a country by its name from a cache or external API.
      *
      * @param countryName the name of the country to retrieve details for.
-     * @return a {@link CountryResDTO} object containing the details of the country.
+     * @return a {@link CountryDTO} object containing the details of the country.
      * @throws InternalServerErrorException if there is an issue retrieving the country details.
      * @throws NotFoundException if no country details are found for the specified name.
      */
     @Cacheable(value = "countryDetails", key = "#countryName")
-    public CountryResDTO getCountryDetailsByCountryName(String countryName) throws InternalServerErrorException, NotFoundException {
+    public CountryDTO getCountryDetailsByCountryName(String countryName) throws InternalServerErrorException, NotFoundException {
         CompletableFuture<RestCountriesResponse> data = restCountriesClient.getAllCountriesByCountryName(countryName);
         RestCountriesResponse response;
         try {
@@ -109,7 +106,7 @@ public class CountryService {
     @Cacheable(value = "countryExchangeRatesByCountryName", key = "#countryName")
     public ExchangeRateRes getCountryExchangeRatesByCountryName(String countryName) throws InternalServerErrorException, NotFoundException {
         String defaultCurrency = "EUR"; // free version only accepts EUR😅
-        CountryResDTO country = getCountryDetailsByCountryName(countryName); // had to get the country to get the currency
+        CountryDTO country = getCountryDetailsByCountryName(countryName); // had to get the country to get the currency
         try {
             return fetchExchangeRateForCurrency(country.currency()).orElseGet(() -> {
                 try {
@@ -186,8 +183,8 @@ public class CountryService {
         return response.gdpData();
     }
 
-    public CountryResDTO buildCountryVM(RestCountriesData country) {
-        return new CountryResDTO(
+    public CountryDTO buildCountryVM(RestCountriesData country) {
+        return new CountryDTO(
                 country.name().common(),
                 country.flags().svg(),
                 HashMapUtils.getFirstKeyFromMap(country.currencies()),

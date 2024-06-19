@@ -46,14 +46,14 @@ public class AuthenticationController {
     @Operation(summary = "Register using email and password")
     @PostMapping("/register")
     @RateLimitProtection
-    public ResponseEntity<ResponseAPI> register(@RequestBody @Valid RegisterDTO data) throws ConflictException, UnauthorizedException, NotFoundException {
+    public ResponseEntity<LoginResponseDTO> register(@RequestBody @Valid RegisterDTO data) throws ConflictException, UnauthorizedException, NotFoundException {
         /* Register account and then login */
         userService.registerUser(data);
         String token = authenticationService.login(new LoginDTO(
                 data.email(),
                 data.password()
         ));
-        return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseAPI(
+        return ResponseEntity.status(HttpStatus.CREATED).body(new LoginResponseDTO(
                 messageSource.getMessage("register.success", null, LocaleContextHolder.getLocale()),
                 token
         ));

@@ -2,8 +2,8 @@ package com.vm.travel.dto.response;
 
 import java.util.List;
 
-public record CountryResDTO(
+public record CountriesResDTO(
         String message,
-        CountryDTO data
+        List<CountryDTO> data
 ) {
 }

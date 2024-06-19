@@ -3,6 +3,10 @@ package com.vm.travel.controllers;
 import com.vm.travel.domain.services.CityService;
 import com.vm.travel.dto.ResponseAPI;
 import com.vm.travel.dto.filters.CityFilters;
+import com.vm.travel.dto.response.CitiesResDTO;
+import com.vm.travel.dto.response.CityResDTO;
+import com.vm.travel.dto.response.CurrentWeatherResDTO;
+import com.vm.travel.dto.response.WeatherForecastResDTO;
 import com.vm.travel.infrastructure.config.ratelimit.RateLimitProtection;
 import com.vm.travel.infrastructure.exceptions.InternalServerErrorException;
 import com.vm.travel.infrastructure.exceptions.NotFoundException;
@@ -31,16 +35,16 @@ public class CitiesController {
     @GetMapping
     @Operation(summary = "Fetch all cities based on request params")
     @RateLimitProtection
-    public ResponseEntity<ResponseAPI> getAllCities(
+    public ResponseEntity<CitiesResDTO> getAllCities(
             @ParameterObject CityFilters cityFilters
     ) throws InternalServerErrorException, UnprocessableEntityException {
         if (cityFilters.getName() != null && cityFilters.getCountryCode() != null) {
-            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(new ResponseAPI(
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(new CitiesResDTO(
                     messageSource.getMessage("cities.unprocessable", null, LocaleContextHolder.getLocale()),
                     null
             ));
         }
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseAPI(
+        return ResponseEntity.status(HttpStatus.OK).body(new CitiesResDTO(
                 messageSource.getMessage("cities.success", null, LocaleContextHolder.getLocale()),
                 cityService.getAllCities(cityFilters)
         ));
@@ -49,9 +53,9 @@ public class CitiesController {
     @GetMapping("/{cityName}/weather/current")
     @Operation(summary = "Gets the current weather in specific city")
     @RateLimitProtection
-    public ResponseEntity<ResponseAPI> getCityCurrentWeather(@PathVariable(name = "cityName") String cityName) throws InternalServerErrorException, UnprocessableEntityException {
+    public ResponseEntity<CurrentWeatherResDTO> getCityCurrentWeather(@PathVariable(name = "cityName") String cityName) throws InternalServerErrorException, UnprocessableEntityException {
         String currentLang = LocaleContextHolder.getLocale().getLanguage();
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseAPI(
+        return ResponseEntity.status(HttpStatus.OK).body(new CurrentWeatherResDTO(
                 messageSource.getMessage("cities.weather.current", null, LocaleContextHolder.getLocale()),
                 cityService.getCityCurrentWeatherByCityName(cityName, currentLang)
         ));
@@ -61,9 +65,9 @@ public class CitiesController {
     @GetMapping("/{cityName}/weather/forecast")
     @Operation(summary = "Gets the weather forecast in specific city")
     @RateLimitProtection
-    public ResponseEntity<ResponseAPI> getCityWeatherForecast(@PathVariable(name = "cityName") String cityName) throws InternalServerErrorException, UnprocessableEntityException {
+    public ResponseEntity<WeatherForecastResDTO> getCityWeatherForecast(@PathVariable(name = "cityName") String cityName) throws InternalServerErrorException, UnprocessableEntityException {
         String currentLang = LocaleContextHolder.getLocale().getLanguage();
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseAPI(
+        return ResponseEntity.status(HttpStatus.OK).body(new WeatherForecastResDTO(
                 messageSource.getMessage("cities.weather.forecast", null, LocaleContextHolder.getLocale()),
                 cityService.getCityWeatherForecastByCityName(cityName, currentLang)
         ));
@@ -72,10 +76,10 @@ public class CitiesController {
     @GetMapping("/{cityName}")
     @Operation(summary = "Get specific city details using the city name")
     @RateLimitProtection
-    public ResponseEntity<ResponseAPI> getCityDetails(
+    public ResponseEntity<CityResDTO> getCityDetails(
             @PathVariable(name = "cityName") String cityName
     ) throws InternalServerErrorException, NotFoundException {
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseAPI(
+        return ResponseEntity.status(HttpStatus.OK).body(new CityResDTO(
                 messageSource.getMessage("cities.one", null, LocaleContextHolder.getLocale()),
                 cityService.getSpecificCityDetailsByCityName(cityName)
         ));

@@ -5,9 +5,11 @@ import { CitySample } from "@/models/city"
 import { Users } from "lucide-react"
 import { useTranslation } from "react-i18next"
 import Formatter from "@/utils/formater"
+import { useNavigate } from "react-router-dom"
 
 export default function CitySampleCard({ city }: { city: CitySample }) {
     const { t } = useTranslation()
+    const navigate = useNavigate()
 
     return (
         <Card className="w-full rounded-lg my-3 overflow-hidden" >
@@ -24,7 +26,7 @@ export default function CitySampleCard({ city }: { city: CitySample }) {
                     <LocateIcon />
                     <span className="text-gray-500 dark:text-gray-400">{city.country}</span>
                 </div>
-                <Button className="w-full">
+                <Button onClick={() => navigate(`city/${city.name}`)} className="w-full">
                     {t('city_sample_card.details_button_label')}
                 </Button>
             </CardContent>

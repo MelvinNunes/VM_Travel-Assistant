@@ -11,7 +11,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Outlet } from "react-router-dom"
+import { Outlet, useNavigate } from "react-router-dom"
 import { NavbarItems } from "@/sections/NavbarItems"
 import { Routes } from "@/routes/routes"
 import { ModeToggle } from "@/components/ui/theme-toggler"
@@ -19,14 +19,17 @@ import LanguageSelector from "@/components/language-selector"
 import { useTranslation } from "react-i18next"
 import { Logo } from "@/components/logo"
 import Footer from "@/sections/Footer"
+import { Toaster } from "@/components/ui/toaster"
 
 
 export function Layout() {
     const { t } = useTranslation()
+    const navigate = useNavigate()
+    const isLoggedIn = false
 
     return (
         <div className="flex min-h-screen w-full flex-col">
-            <header className="sticky top-0 flex z-50 h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
+            <header className="sticky top-0 flex z-50 h-16 items-center gap-4 border-b dark:border-none bg-background px-4 md:px-6">
                 <nav className="flex-col gap-6 text-md font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-lg lg:gap-6">
                     <Logo title={t('title')} isFooter={false} />
                     <NavbarItems routes={Routes} />
@@ -34,7 +37,8 @@ export function Layout() {
                 <div className="flex w-full items-center justify-end gap-4 md:ml-auto md:gap-2 lg:gap-4">
                     <LanguageSelector />
                     <ModeToggle />
-                    <DropdownMenu>
+
+                    {isLoggedIn ? <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button variant="secondary" size="icon" className="rounded-full">
                                 <CircleUser className="h-5 w-5" />
@@ -44,17 +48,17 @@ export function Layout() {
                         <DropdownMenuContent align="end">
                             <DropdownMenuLabel>Melvin Nunes</DropdownMenuLabel>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem>{t('login')}</DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem>{t('logout')}</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => { }}>{t('logout')}</DropdownMenuItem>
                         </DropdownMenuContent>
-                    </DropdownMenu>
+                    </DropdownMenu> : <Button onClick={() => navigate("login")}>{t('login')}</Button>}
+
                 </div>
             </header>
-            <main className="flex flex-1 flex-col gap-4 md:gap-8">
+            <main className="flex flex-1 flex-col gap-4 md:gap-8 dark:bg-slate-800">
                 <Outlet />
             </main>
             <Footer />
+            <Toaster />
         </div>
     )
 }

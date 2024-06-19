@@ -10,6 +10,7 @@
     },
     "login": "Login",
     "logout": "Logout",
+    "register": "Register",
     "hero": {
         "title": "Discover Your Next Adventure.",
         "description": "Your ultimate travel research companion.",
@@ -19,7 +20,8 @@
     },
     "search_page": {
         "title": "Search For Cities",
-        "recommendation_title": "Some cities you might like"
+        "recommendation_title": "Some cities you might like",
+        "results": "Results for your search"
     },
     "footer": {
         "description": "Destinos is your ideal companion for exploring the world. Created by travel lovers, our goal is to simplify planning your adventures by offering essential information about cities around the world.",
@@ -61,6 +63,11 @@
             "two": {
                 "title": "Save your favorite destinations and plan your next trip."
             }
+        },
+        "get_started": {
+            "title": "Unlock the World with Destino’s Guide.",
+            "description": "Plan your dream trip with confidence.",
+            "button_label": "Get Started"
         }
     },
     "city_sample_card": {

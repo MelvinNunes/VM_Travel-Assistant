@@ -33,30 +33,30 @@ export default function Footer() {
     const { t } = useTranslation()
 
     return (
-        <div className="w-full h-full bg-slate-500 px-5 md:px-20 lg:px-40 mt-10">
+        <div className="w-full h-full bg-slate-500 dark:bg-slate-600  px-5 md:px-20 lg:px-40 pt-10">
             <div className="pt-10">
                 <Logo title={t('title')} isFooter />
-                <p className="text-white mt-2">{t('footer.description')}</p>
+                <p className="text-white dark:text-slate-300 mt-2">{t('footer.description')}</p>
             </div>
             <div className="my-5">
-                <h1 className="font-medium text-white mb-2">{t('footer.find_us')}</h1>
+                <h1 className="font-medium text-white dark:text-slate-300 mb-2">{t('footer.find_us')}</h1>
                 <SocialMedia />
             </div>
             <Separator />
             <div className="my-5">
                 <a href="/">
-                    <p className="text-white text-sm">{t('footer.privacy')}</p>
+                    <p className="text-white dark:text-slate-300 text-sm">{t('footer.privacy')}</p>
                 </a>
                 <a href="/">
-                    <p className="text-white text-sm">{t('footer.usage')}</p>
+                    <p className="text-white dark:text-slate-300 text-sm">{t('footer.usage')}</p>
                 </a>
                 <a href="/">
-                    <p className="text-white text-sm">{t('footer.cookies')}</p>
+                    <p className="text-white dark:text-slate-300 text-sm">{t('footer.cookies')}</p>
                 </a>
             </div>
             <Separator />
             <div className="my-5">
-                <p className="text-white text-sm ">{t('footer.copyright')}</p>
+                <p className="text-white dark:text-slate-300 text-sm ">{t('footer.copyright')}</p>
             </div>
         </div>
     )

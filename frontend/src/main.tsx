@@ -14,6 +14,9 @@ import Home from './pages/Home.tsx';
 import DefaultErrorPage from './sections/Error.tsx';
 import Search from './pages/Search.tsx';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import Register from './pages/Register.tsx';
+import Login from './pages/Login.tsx';
+import City from './pages/City.tsx';
 
 const router = createBrowserRouter([
   {
@@ -29,6 +32,18 @@ const router = createBrowserRouter([
       {
         path: "/search",
         element: <Search />
+      },
+      {
+        path: "/register",
+        element: <Register />
+      },
+      {
+        path: "/login",
+        element: <Login />
+      },
+      {
+        path: "/city/:name",
+        element: <City />
       }
     ]
   },

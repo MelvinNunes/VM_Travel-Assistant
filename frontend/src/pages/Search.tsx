@@ -3,17 +3,16 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { useCities } from "@/data/city";
 import { City } from "@/models/city";
-import { QueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { SearchIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 export default function Search() {
     const { t } = useTranslation()
-    const queryClient = new QueryClient()
+    const queryClient = useQueryClient()
     const [query, setQuery] = useState<string>("")
-    const { cities, isLoading } = useCities({ name: query })
-
+    const { cities, isPending } = useCities({ name: query })
 
     useEffect(() => {
         queryClient.invalidateQueries({ queryKey: ["getAllCities"] })
@@ -39,8 +38,8 @@ export default function Search() {
             {/* End Input */}
             <Separator />
 
-            <h1 className="text-slate-400 font-medium my-3">{t('search_page.recommendation_title')}</h1>
-            {isLoading ? <SkeletonForCities /> : <CitiesYouMightLike cities={cities} />}
+            <h1 className="text-slate-400 font-medium my-3">{query ? t('search_page.results') : t('search_page.recommendation_title')}</h1>
+            {isPending ? <SkeletonForCities /> : <CitiesYouMightLike cities={cities} />}
         </div>
     )
 }

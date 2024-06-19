@@ -15,13 +15,13 @@ export default function Home() {
         <div className="flex flex-col w-full">
             <Hero />
             <div className="bg-slate-50 mb-4">
-                <div className="bg-slate-200 flex gap-3 w-full items-center md:justify-center h-20 border border-slate-300 px-4">
+                <div className="bg-slate-200 flex gap-3 w-full items-center md:justify-center h-20 border border-slate-300 dark:border-slate-900 dark:bg-slate-700 px-4">
                     <img src={HomeIcon} alt="home-icon" className="w-6 h-6" />
-                    <p className="text-slate-600 font-medium">{t('home.promo.one.title')}</p>
+                    <p className="text-slate-600 dark:text-slate-400 font-medium">{t('home.promo.one.title')}</p>
                 </div>
-                <div className="bg-slate-200 flex gap-3 w-full items-center md:justify-center h-20 border border-slate-300 px-4">
-                    <img src={HeartIcon} alt="home-icon" className="w-6 h-6" />
-                    <p className="text-slate-600 font-medium">{t('home.promo.two.title')}</p>
+                <div className="bg-slate-200 flex gap-3 w-full items-center md:justify-center h-20 border  border-slate-300 dark:border-slate-900 dark:bg-slate-700  px-4 ">
+                    <img src={HeartIcon} alt="home-icon" className="w-6 h-6 " />
+                    <p className="text-slate-600 dark:text-slate-400 font-medium">{t('home.promo.two.title')}</p>
                 </div>
             </div>
             {/* Popular Static Destinations to improve apps experience */}

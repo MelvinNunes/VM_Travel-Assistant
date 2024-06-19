@@ -17,8 +17,8 @@ export default function Login() {
     }
 
     const loginValidator = Yup.object({
-        email: Yup.string().email("Invalid email address").required("Email is required"),
-        password: Yup.string().required("Password is required")
+        email: Yup.string().email(t('auth_screen.login.form.email.invalid')).required(t('auth_screen.login.form.email.required')),
+        password: Yup.string().required(t('auth_screen.login.form.password.required'))
     })
 
     const formik = useFormik({
@@ -43,6 +43,7 @@ export default function Login() {
                     value={formik.values.email}
                     placeholder={t('auth_screen.login.form.email.placeholder')}
                 />
+                {formik.errors.email && formik.touched.email && <span className="text-sm text-red-500">{formik.errors.email}</span>}
             </div>
             <div className="flex flex-col gap-2">
                 <Label>{t('auth_screen.login.form.password.label')}</Label>
@@ -51,9 +52,10 @@ export default function Login() {
                     value={formik.values.password}
                     placeholder={t('auth_screen.login.form.password.placeholder')}
                 />
+                {formik.errors.password && formik.touched.password && <span className="text-sm text-red-500">{formik.errors.password}</span>}
             </div>
             <Button disabled={isPending} type="submit">{t('auth_screen.login.form.button')} {isPending && <ReloadIcon className="ml-2 animate-spin" />}</Button>
-            <p className="text-sm">{t('auth_screen.login.form.does_have_account')} <a href="/register" className="text-primary">{t('auth_screen.login.form.register_new')}</a> </p>
+            <p className="text-sm">{t('auth_screen.login.form.does_have_account')} <a href="/register" className="text-primary">{t('auth_screen.login.form.register_new')}</a></p>
         </form>
     )
 }

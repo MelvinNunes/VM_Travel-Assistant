@@ -18,15 +18,44 @@
             "form": {
                 "email": {
                     "label": "Email",
-                    "placeholder": "Enter email address"
+                    "placeholder": "Enter email address",
+                    "invalid": "Invalid email address",
+                    "required": "Email is required"
                 },
                 "password": {
-                    "label": "Passowrd",
-                    "placeholder": "Enter a password"
+                    "label": "Password",
+                    "placeholder": "Enter a password",
+                    "required": "Password is required"
                 },
                 "button": "Login",
                 "does_have_account": "New to Destinos?",
                 "register_new": "Create an account"
+            }
+        },
+        "register": {
+            "title": "Create your free account",
+            "description": "Create your free account to join 300,000+ travellers!",
+            "form": {
+                "name": {
+                    "label": "Name",
+                    "placeholder": "ex: Melvin Nunes",
+                    "required": "Name is required"
+                },
+                "email": {
+                    "label": "Email",
+                    "placeholder": "Enter email address",
+                    "invalid": "Invalid email address",
+                    "required": "Email is required"
+                },
+                "password": {
+                    "label": "Password",
+                    "placeholder": "Enter a password",
+                    "required": "Password is required",
+                    "min": "Password needs to have more than 3 words"
+                },
+                "button": "Create Account",
+                "already_have": "Already have an account?",
+                "login_to": "Login"
             }
         }
     },

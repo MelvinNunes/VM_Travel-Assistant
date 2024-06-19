@@ -52,7 +52,7 @@ type RegisterResponse = {
   token: string;
 };
 
-type RegisterInput = {
+export type RegisterInput = {
   name: string;
   email: string;
   password: string;
@@ -60,25 +60,23 @@ type RegisterInput = {
 
 export function useRegister() {
   const navigate = useNavigate();
+  const [, setIsUserAuth] = useAtom(isUserAuthenticated);
 
   const { isPending, isError, mutate, isSuccess } = useMutation({
     mutationFn: (data: RegisterInput) => {
       return HttpClient.post<RegisterResponse>(API_ENDPOINTS.REGISTER, data);
     },
-    onSuccess: () => {
-      //   setAuthToken(data?.token);
-
-      //   const decoded: DecodedToken = jwtDecode(data?.data.token);
-      //   setIsUserOnline(decoded.sub);
-
+    onSuccess: (data) => {
+      setAuthToken(data?.token);
+      setIsUserAuth(true);
       navigate("/");
     },
-    onError: () => {
-      //   toast({
-      //     title: "Ocorreu um erro",
-      //     description: "Por favor verifique as suas credenciais!",
-      //     variant: "destructive",
-      //   });
+    onError: (error) => {
+      toast({
+        title: "Ocorreu um erro",
+        description: error.message,
+        variant: "destructive",
+      });
     },
   });
 
@@ -86,6 +84,6 @@ export function useRegister() {
     isPending,
     isSuccess,
     isError,
-    Register: mutate,
+    register: mutate,
   };
 }

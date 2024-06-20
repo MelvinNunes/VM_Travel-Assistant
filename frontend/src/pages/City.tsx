@@ -11,19 +11,21 @@ import { PopulationDetails } from "@/sections/city/PopulationDetails"
 import { GdpDetails } from "@/sections/city/GdpDetails"
 import { CurrencyDetails } from "@/sections/city/CurrencyDetails"
 import { useTranslation } from "react-i18next"
+import { Skeleton } from "@/components/ui/skeleton"
 
 export default function CityScreen() {
     const [isAuthenticated,] = useAtom(isUserAuthenticated)
     const { t } = useTranslation()
     const { name } = useParams()
 
-    const { city } = useCity(name);
+    const { city, isFetching } = useCity(name);
 
     return (
         <div>
             <div className="flex items-center gap-2 px-4 md:px-12 mt-7 dark:pb-8">
                 <MapPinIcon className="h-6 w-6 text-primary" />
-                <h1 className="text-xl dark:text-slate-400 font-semibold">{city?.name}</h1>
+                {isFetching && <Skeleton className="h-5 w-60"></Skeleton>}
+                {city && <h1 className="text-xl dark:text-slate-400 font-semibold">{city.name}</h1>}
             </div>
             <div className="grid min-h-screen w-full bg-background text-foreground">
                 <main className="container grid gap-4 px-4 py-8 md:px-6 md:py-10">

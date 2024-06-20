@@ -22,7 +22,7 @@ geodb:
   url: http://geodb-free-service.wirefreethought.com/v1
 openweather:
   url: https://api.openweathermap.org/data/2.5
-  key: 52cd50263b9bd19f535b365d6bc2ce49
+  key: add_your_key_here
 exchangerates:
   url: http://api.exchangeratesapi.io
   api:

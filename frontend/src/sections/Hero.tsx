@@ -10,7 +10,7 @@ export function Hero() {
     return (
         <div className="flex flex-col justify-center items-center bg-hero bg-cover w-full h-72 px-6">
             <div className="flex flex-col justify-center items-center gap-2 mb-5">
-                <h1 className="text-3xl font-bold text-white">{t('hero.title')}</h1>
+                <h1 className="text-3xl text-center font-bold text-white">{t('hero.title')}</h1>
                 <p className="text-white">{t('hero.description')}</p>
             </div>
             <div className="relative w-full max-w-lg mt-8 z-0">

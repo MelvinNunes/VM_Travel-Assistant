@@ -14,7 +14,7 @@ export function CitiesCarousel({ cities }: { cities: CitySample[] }) {
             opts={{
                 align: "center",
             }}
-            className="w-full max-w-sm md:max-w-3xl lg:max-w-4xl"
+            className="w-full max-w-60 md:max-w-3xl lg:max-w-4xl"
         >
             <CarouselContent>
                 {cities.map((city) => (

@@ -44,7 +44,7 @@ export default function HomeScreen() {
                     </div>
                 </div>
             </div>
-            <div className="flex w-full justify-center gap-3 my-6">
+            <div className="flex w-full justify-center gap-3 my-6 px-4">
                 <RecommendedActivityCard title={t('home.recommendation_card.holidays.title')} description={t('home.recommendation_card.holidays.description')} backgroundImagePath="/collection.png" />
                 <RecommendedActivityCard title={t('home.recommendation_card.work.title')} description={t('home.recommendation_card.work.description')} backgroundImagePath="/collection-1.png" />
             </div>

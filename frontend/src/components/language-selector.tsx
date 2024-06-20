@@ -10,7 +10,7 @@ export default function LanguageSelector() {
                 <DropdownMenuTrigger asChild>
                     <Button variant="outline" className="flex items-center gap-2 dark:text-white">
                         <GlobeIcon />
-                        <span>{t('lang.label')}</span>
+                        <span className="hidden md:inline">{t('lang.label')}</span>
                         <ChevronDownIcon />
                     </Button>
                 </DropdownMenuTrigger>

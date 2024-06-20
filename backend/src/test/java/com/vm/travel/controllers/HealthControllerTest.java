@@ -14,7 +14,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 class HealthControllerTest {
@@ -22,16 +21,23 @@ class HealthControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    @DisplayName("Check Server Health Success - 200")
+    @DisplayName("Check Server Health Success")
     void health() throws Exception {
         mockMvc.perform(get("/api/v1/health"))
                 .andExpect(status().isOk());
     }
 
-//    @Test
-//    @DisplayName("Check Spring Security for not found route - 403")
-//    void unHealth() throws Exception {
-//        mockMvc.perform(get("/health"))
-//                .andExpect(status().isForbidden());
-//    }
+    @Test
+    @DisplayName("Check Spring Security for not found route")
+    void unHealth() throws Exception {
+        mockMvc.perform(get("/health"))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @DisplayName("Check Spring Security for unauthorized route")
+    void unauthorized() throws Exception {
+        mockMvc.perform(get("/api/accounts/me"))
+                .andExpect(status().isForbidden());
+    }
 }

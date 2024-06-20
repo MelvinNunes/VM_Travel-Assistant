@@ -1,9 +1,13 @@
 # TEST
+# For some reason, integration tests are not detecting .env variables
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/travel_db
     username: travel
     password: password
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
 api:
   security:
     token:
@@ -12,13 +16,13 @@ api:
       duration_in_hours: 1
 app:
   rate:
-    limit: 1
+    limit: 300
     durationinms: 6000
 geodb:
   url: http://geodb-free-service.wirefreethought.com/v1
 openweather:
   url: https://api.openweathermap.org/data/2.5
-  key: add_your_key_here
+  key: 52cd50263b9bd19f535b365d6bc2ce49
 exchangerates:
   url: http://api.exchangeratesapi.io
   api:

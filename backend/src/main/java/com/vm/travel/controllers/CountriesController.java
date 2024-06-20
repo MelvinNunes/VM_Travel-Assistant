@@ -1,7 +1,6 @@
 package com.vm.travel.controllers;
 
 import com.vm.travel.domain.services.CountryService;
-import com.vm.travel.dto.ResponseAPI;
 import com.vm.travel.dto.filters.CountryFilters;
 import com.vm.travel.dto.response.*;
 import com.vm.travel.infrastructure.config.ratelimit.RateLimitProtection;
@@ -79,7 +78,7 @@ public class CountriesController {
     @GetMapping("/{countryName}")
     @Operation(summary = "Get country details based on country's name")
     @RateLimitProtection
-    public ResponseEntity<CountryResDTO> getAllCountries(
+    public ResponseEntity<CountryResDTO> getCountryDetails(
             @PathVariable(name = "countryName") String countryName
     ) throws InternalServerErrorException, NotFoundException {
         return ResponseEntity.status(HttpStatus.OK).body(new CountryResDTO(

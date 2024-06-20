@@ -31,6 +31,7 @@ public class SecurityFilter extends OncePerRequestFilter {
     private final TokenService tokenService;
     private final UserRepo userRepo;
     private final Set<String> skipUrls = new HashSet<>(List.of(
+            "/api/v1/cities",
             "/api/v1/cities/{cityName:.+}",
             "/api/v1/countries/{countryName:.+}",
             "/api/v1/cities/{cityName:.+}/weather/current",

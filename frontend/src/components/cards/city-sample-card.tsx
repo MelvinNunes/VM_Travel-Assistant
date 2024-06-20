@@ -12,7 +12,7 @@ export default function CitySampleCard({ city }: { city: CitySample }) {
     const navigate = useNavigate()
 
     return (
-        <Card className="w-full rounded-lg my-3 overflow-hidden" >
+        <Card className="w-full rounded-lg my-3 overflow-hidden dark:bg-slate-900" >
             <img src={city.cityImage} alt="City Image" className="w-full h-48 object-cover" />
             <CardContent className="p-6 space-y-4">
                 <div className="flex items-center justify-between">

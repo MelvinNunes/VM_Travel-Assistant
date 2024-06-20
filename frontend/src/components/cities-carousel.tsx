@@ -23,8 +23,8 @@ export function CitiesCarousel({ cities }: { cities: CitySample[] }) {
                     </CarouselItem>
                 ))}
             </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
+            <CarouselPrevious className="dark:bg-slate-500" />
+            <CarouselNext className="dark:bg-slate-500" />
         </Carousel>
     )
 }

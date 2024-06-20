@@ -25,6 +25,7 @@ import { isUserAuthenticated } from "@/atoms/auth"
 import { useGetUser } from "@/data/auth"
 import { removeAuthToken } from "@/data/client/token.utils"
 import { useEffect } from "react"
+import { Skeleton } from "@/components/ui/skeleton"
 
 
 export function Layout() {
@@ -68,7 +69,7 @@ export function Layout() {
                             }}>{t('logout')}
                             </DropdownMenuItem>
                         </DropdownMenuContent>
-                    </DropdownMenu> : <Button onClick={() => navigate("login")}>{t('login')}</Button>}
+                    </DropdownMenu> : isFetching ? <Skeleton className="h-6 w-10"></Skeleton> : <Button onClick={() => navigate("login")}>{t('login')}</Button>}
 
                 </div>
             </header>

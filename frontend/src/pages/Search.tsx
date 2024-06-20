@@ -7,6 +7,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { SearchIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useDebouncedCallback } from 'use-debounce';
 
 export default function SearchScreen() {
     const { t } = useTranslation()
@@ -14,6 +15,12 @@ export default function SearchScreen() {
     const [query, setQuery] = useState<string>("")
     const { cities, isFetching } = useCities({ name: query })
 
+    const debounced = useDebouncedCallback(
+        (value) => {
+            setQuery(value);
+        },
+        300
+    );
 
     useEffect(() => {
         queryClient.invalidateQueries({ queryKey: ["getAllCities"] })
@@ -27,7 +34,7 @@ export default function SearchScreen() {
                 <div className="relative w-full max-w-2xl my-8">
                     <Input
                         type="text"
-                        onChange={(e) => setQuery(e.target.value)}
+                        onChange={(e) => debounced(e.target.value)}
                         placeholder={t('hero.search.placeholder')}
                         className="w-full rounded-md border border-gray-300 px-4 py-2 pr-10 text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:focus:border-blue-500"
                     />

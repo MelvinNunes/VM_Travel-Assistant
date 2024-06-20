@@ -8,6 +8,7 @@ Travel Assistant is a web application designed to help users plan and manage the
 
 - [Installation](#Installation)
 - [Usage](#Usage)
+- [Tests](#Tests)
 
 # Installation
 
@@ -16,3 +17,7 @@ To install this project node modules just go to the root path and run `yarn` (or
 # Usage
 
 To run the project you need to setup all the variables that are in .env.example and run `yarn dev` to start the development server!
+
+# Tests
+
+This project has unit tests...To run them just hit `yarn test` in the root folder

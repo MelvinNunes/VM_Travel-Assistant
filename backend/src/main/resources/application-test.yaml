@@ -1,25 +1,29 @@
 # TEST
 spring:
   datasource:
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    url: jdbc:postgresql://localhost:5432/travel_db
+    username: travel
+    password: password
 api:
   security:
     token:
-      secret: ${JWT_SECRET}
-      issuer: ${JWT_ISSUER}
-      duration_in_hours: ${JWT_DURATION_IN_HOURS}
+      secret: secret
+      issuer: issuer
+      duration_in_hours: 1
+app:
+  rate:
+    limit: 1
+    durationinms: 6000
 geodb:
-  url: ${GEO_DB_URL}
+  url: http://geodb-free-service.wirefreethought.com/v1
 openweather:
-  url: ${OPEN_WEATHER_URL}
-  key: ${OPEN_WEATHER_KEY}
+  url: https://api.openweathermap.org/data/2.5
+  key: add_your_key_here
 exchangerates:
-  url: ${EXCHANGE_RATES_URL}
+  url: http://api.exchangeratesapi.io
   api:
-    key: ${EXCHANGE_RATES_API_KEY}
+    key: api_key_here
 wordlbank:
-  url: ${WORLD_BANK_URL}
+  url: https://api.worldbank.org
 restcountries:
-  url: ${REST_COUNTRIES_URL}
+  url: https://restcountries.com/v3.1

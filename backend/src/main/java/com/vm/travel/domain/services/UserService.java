@@ -5,7 +5,7 @@ import com.vm.travel.domain.repositories.UserRepo;
 import com.vm.travel.dto.request.RegisterDTO;
 import com.vm.travel.infrastructure.exceptions.ConflictException;
 import com.vm.travel.infrastructure.exceptions.NotFoundException;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,11 +13,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
 public class UserService {
     private final MessageSource messageSource;
     private final PasswordEncoder passwordEncoder;
     private final UserRepo userRepo;
+
+    @Autowired
+    public UserService(MessageSource messageSource, PasswordEncoder passwordEncoder, UserRepo userRepo) {
+        this.messageSource = messageSource;
+        this.passwordEncoder = passwordEncoder;
+        this.userRepo = userRepo;
+    }
 
 
     /**

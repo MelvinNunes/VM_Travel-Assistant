@@ -10,6 +10,10 @@ api:
       secret: ${JWT_SECRET}
       issuer: ${JWT_ISSUER}
       duration_in_hours: ${JWT_DURATION_IN_HOURS}
+app:
+  rate:
+    limit: ${RATE_LIMIT_REQUESTS_PER_MS}
+    durationinms: ${RATE_LIMIT_MS_DURATION}
 geodb:
   url: ${GEO_DB_URL}
 openweather:

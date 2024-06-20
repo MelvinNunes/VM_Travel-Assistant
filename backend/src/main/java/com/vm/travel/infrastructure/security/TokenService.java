@@ -5,7 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.vm.travel.domain.entities.User;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -16,7 +16,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
 @Service
-@RequiredArgsConstructor
 public class TokenService {
     @Value("${api.security.token.secret}")
     private String secret;
@@ -26,6 +25,11 @@ public class TokenService {
     private Integer duration;
 
     private final MessageSource messageSource;
+
+    @Autowired
+    public TokenService(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
 
     public String generateToken(User user){
         try{

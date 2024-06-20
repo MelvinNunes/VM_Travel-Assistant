@@ -6,7 +6,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpHeaders;
@@ -19,13 +19,11 @@ import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Component
-@RequiredArgsConstructor
 public class SecurityFilter extends OncePerRequestFilter {
     private final MessageSource messageSource;
     private final TokenService tokenService;
@@ -40,6 +38,13 @@ public class SecurityFilter extends OncePerRequestFilter {
             "/api/v1/auth/login"
     ));
     private final AntPathMatcher pathMatcher = new AntPathMatcher();
+
+    @Autowired
+    public SecurityFilter(MessageSource messageSource, TokenService tokenService, UserRepo userRepo) {
+        this.messageSource = messageSource;
+        this.tokenService = tokenService;
+        this.userRepo = userRepo;
+    }
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,@NonNull HttpServletResponse response,@NonNull FilterChain filterChain) throws ServletException, IOException {

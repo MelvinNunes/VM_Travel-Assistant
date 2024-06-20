@@ -15,6 +15,7 @@ This project is an API built using **Java 17, Java Spring, Flyway Migrations, Po
 - [API Endpoints](#api-endpoints)
 - [Authentication](#authentication)
 - [Database](#database)
+- [Testing](#testing)
 
 ## Installation
 1.  Install dependencies with Maven
@@ -29,7 +30,7 @@ After the initial setup and loading dependencies, you can proceed to usage.
 
 1. Start the project.
 2. The API will be accessible at http://{your_host}:{your_port}, ex: http://localhost:8080
-3. You can start the application using Docker (Compose module) if you have, just run "docker compose up -d" (if you provided the .env file) in the root path.
+3. You can start the application using Docker (Compose module) if you have, just run `docker compose  --profile default up -d` (if you provided the .env file) in the root path.
 
 ## Internationalization
 
@@ -52,8 +53,10 @@ The API uses Spring Security for authentication control with JWT Tokens.
 To access protected endpoints, provide the appropriate authentication credentials in the request header.
 
 ## Database
-The project utilizes PostgreSQL as the database. The necessary database migrations are managed using Flyway.
+The project utilizes `PostgreSQL` as the database. The necessary database migrations are managed using Flyway.
 
-
+## Testing
+To test the project you need to set up a test database. I have defined a test database in docker, just run `docker compose --profile test up -d`
+If you have maven you can run all test with `mvn test`
 
 

@@ -1,4 +1,15 @@
 services:
+  test:
+    image: 'postgres:16'
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=travel_db
+      - POSTGRES_USER=travel
+      - POSTGRES_PASSWORD=password
+    profiles:
+      - test
+
   postgres:
     image: 'postgres:16'
     ports:
@@ -9,6 +20,8 @@ services:
       - POSTGRES_PASSWORD=${DB_PASSWORD}
     volumes:
       - ./db-data:/var/lib/postgres
+    profiles:
+      - default
 
   api:
     build: .
@@ -18,3 +31,5 @@ services:
       - .env
     depends_on:
       - postgres
+    profiles:
+      - default

@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: ${APP_PROFILE:dev}
+    active: ${APP_PROFILE:test}
   server:
     port: ${SERVER_PORT:8080}
   messages:
@@ -15,8 +15,3 @@ spring:
 springdoc:
   swagger-ui:
     path: /docs.html
-
-app:
-  rate:
-    limit: ${RATE_LIMIT_REQUESTS_PER_MS}
-    durationinms: ${RATE_LIMIT_MS_DURATION}

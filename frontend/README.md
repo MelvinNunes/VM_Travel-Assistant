@@ -2,16 +2,17 @@
 
 # Overview
 
-Travel Assistant is a web application designed to help users plan and manage their travel itineraries. This project utilizes modern web technologies including React, TypeScript, and Tailwind CSS, with a focus on delivering a smooth user experience.
+Travel Assistant is a web application designed to help users plan and manage their travel itineraries. This project utilizes modern web technologies including React, TypeScript, React Query, Shadcn and Tailwind CSS, with a focus on delivering a smooth user experience.
 
 # Table of Contents
 
-- Installation
-- Scripts
-- Dependencies
+- [Installation](#Installation)
+- [Usage](#Usage)
 
 # Installation
 
-git clone https://github.com/MelvinNunes/VM_Travel-Assistant
-cd VM_Travel-Assistant
-yarn (or npm install if youre using npm)
+To install this project node modules just go to the root path and run `yarn` (or npm install if youre using npm)
+
+# Usage
+
+To run the project you need to setup all the variables that are in .env.example and run `yarn dev` to start the development server!

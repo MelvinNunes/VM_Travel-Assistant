@@ -15,7 +15,7 @@ export function WeatherForecast({ cityName }: { cityName: string }) {
             <CardHeader>
                 <CardTitle>{t('forecast.title')}</CardTitle>
             </CardHeader>
-            <CardContent className="grid grid-cols-5 gap-5">
+            <CardContent className="grid md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-5">
                 {forecast?.map((weather, index) => (
                     <div key={index} className="flex flex-col items-center gap-2 text-center border rounded p-3 border-gray-100 dark:text-slate-400 dark:border-slate-900">
                         {weather.temperature_date && <div className="font-medium">{DateFormatter.formatDate(weather.temperature_date)}</div>}

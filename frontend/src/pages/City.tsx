@@ -12,6 +12,7 @@ import { GdpDetails } from "@/sections/city/GdpDetails"
 import { CurrencyDetails } from "@/sections/city/CurrencyDetails"
 import { useTranslation } from "react-i18next"
 import { Skeleton } from "@/components/ui/skeleton"
+import { CityMapLocation } from "@/sections/city/CityMapLocation"
 
 export default function CityScreen() {
     const [isAuthenticated,] = useAtom(isUserAuthenticated)
@@ -68,6 +69,7 @@ export default function CityScreen() {
                     </section>
                 </main>
             </div>
+            {city && <CityMapLocation lat={city.latitude} lon={city.longitude} />}
         </div>
     )
 }
